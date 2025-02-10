@@ -9,9 +9,8 @@
   outputs = { self, nixpkgs, ... }: let
     pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
-    config = {
-      templates = ./templates;
-      lang = "sv";
+    templates = {
+      page = ./templates/page.nix;
     };
 
     files = [
@@ -22,14 +21,17 @@
   in rec {
 
     result =
-      (map (f: { path = builtins.replaceStrings [".nix"] [".html"] (builtins.substring 56 999 (toString f)); html = import f { inherit config; }; }) 
+      map (f: { path = f.path;
+                html = import f.data.template f.data; })
+      (map (f: { path = builtins.replaceStrings [".nix"] [".html"] (builtins.substring 56 999 (toString f));
+                 data = import f templates; })
       files);
+
 
     packages.x86_64-linux.default = pkgs.stdenv.mkDerivation {
       name = "nix-to-html";
 
-      system = "x86_64-linux";
-      nativeBuildInputs = [ pkgs.bash pkgs.nix ];
+      system = builtins.currentSystem;
 
       src = ./.;  # Include source files in the derivation
 
@@ -37,7 +39,7 @@
         mkdir -p $out
         mkdir -p $out/comics
         echo "building files..."
-        ${nixpkgs.lib.concatStringsSep "\n" (map (f: "echo '${f.html}' > $out/${f.path}") result)}
+        ${builtins.concatStringsSep "\n" (map (f: "echo '${f.html}' > $out/${f.path}") result)}
       '';
 
       installPhase = ''

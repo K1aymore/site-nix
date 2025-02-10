@@ -1,12 +1,10 @@
-{ title, content, date }:
+{ title, content, date, ... }@inputs:
 
 
 
 
-import ./parts/header.nix title + ''
-
+import ./parts/header.nix inputs + ''
 
 ${content}
 
-
-'' + import ./parts/footer.nix {}
+'' + import ./parts/footer.nix inputs
