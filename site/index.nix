@@ -10,6 +10,6 @@ templates:
 
 	en = "Welcome to my site!";
 
-	content = "Välkommen till min webbsida!";
+	sv = "Välkommen till min webbsida!";
 	
 }

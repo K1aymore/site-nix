@@ -21,11 +21,16 @@
   in rec {
 
     result =
-      map (f: { path = f.path;
-                html = import f.data.template f.data; })
+      (map (f: { path = f.path;
+                 html = import f.data.template f.data; })
+      (builtins.concatLists
+      (map (f: [{ path = f.path;
+                  data = f.data // { content = f.data.en; }; }
+               { path = "sv/${f.path}";
+                 data = f.data // { content = f.data.sv; }; }])
       (map (f: { path = builtins.replaceStrings [".nix"] [".html"] (builtins.substring 56 999 (toString f));
                  data = import f templates; })
-      files);
+      files))));
 
 
     packages.x86_64-linux.default = pkgs.stdenv.mkDerivation {
@@ -36,8 +41,8 @@
       src = ./.;  # Include source files in the derivation
 
       buildPhase = ''
-        mkdir -p $out
         mkdir -p $out/comics
+        mkdir -p $out/sv/comics
         echo "building files..."
         ${builtins.concatStringsSep "\n" (map (f: "echo '${f.html}' > $out/${f.path}") result)}
       '';

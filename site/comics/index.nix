@@ -8,7 +8,7 @@ templates:
 
 	date = 2025-02-07;
 
-	content = "Welcome to my site!";
+	en = "Welcome to my site!";
 
 	sv = "Välkommen till min webbsida!";
 	

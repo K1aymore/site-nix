@@ -1,4 +1,4 @@
-{ title, content, date, ... }@inputs:
+{ title, content, ... }@inputs:
 
 
 
