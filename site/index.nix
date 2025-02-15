@@ -12,4 +12,6 @@ templates:
 
 	sv = "Välkommen till min webbsida!";
 	
+	tp = "moku";
+
 }
