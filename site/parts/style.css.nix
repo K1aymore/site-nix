@@ -19,17 +19,24 @@ let
 in
 {
 
+  # sitelen pona fonts
+  # nasin-nanpa: very complete. hard to read. kala eyes
+  # linja-pona: mi symbol looks bad. no kala eyes
+  # FairfaxPonaHD: looks pretty nice (slightly stretched vertically). kala eyes
+  # sitelen-seli-kiwen-asuki: not as crisp. most readable cartouches. kala eyes
+  # nishiki-teki-lili: thicker than sitelen-seli. nice cartouches. kala eyes
+  # nishiki-teki-lili-pi-pss: same but more space around punctuation. kala eyes
+  # sitelen-Antowi: doesn't work? no kala eyes
   content = ''
     @font-face {
-      font-family: linja-pona;
-      src: url('linja-pona-4.1.woff') format('woff');
-      font-weight: normal;
+      font-family: sitelen-seli-kiwen-asuki;
+      src: url('sitelen-seli-kiwen-asuki.ttf') format('truetype');
+      font-weight: lighter;
       font-style: normal;
     }
-    .linja-pona {
-      font-family: linja-pona;
-      font-feature-settings: "liga" 1, "clig" 1, "calt" 1, "kern" 1, "mark" 1;
-      text-rendering: optimizeLegibility;
+    .sitelen-pona {
+      font-family: sitelen-seli-kiwen-asuki;
+      font-size: 1.7rem;
     }
 
     body {

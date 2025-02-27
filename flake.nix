@@ -23,7 +23,13 @@
     ];
 
     binaries = [
-      ./site/parts/linja-pona-4.1.woff
+      ./site/parts/nasin-nanpa-4.0.2.otf
+      ./site/parts/linja-pona-4.9.otf
+      ./site/parts/FairfaxPonaHD.ttf
+      ./site/parts/sitelen-seli-kiwen-asuki.ttf
+      ./site/parts/nishiki-teki-lili-pi-pss.otf
+      ./site/parts/nishiki-teki-lili.ttf
+      ./site/parts/sitelen-Antowi_rev02.otf
     ];
 
 
@@ -49,15 +55,18 @@
         ( f // {
           lang = "tp";
           content = builtins.replaceStrings
-            [ " - " " -- " "_" "-" "--" "---" ]
-            [ " - " " -- " " " " " " "  " " ]
+            [ "&" ]
+            [ " " ]
             f.tp;
           path = "tp/${f.path}";
         })
         # sitelen pona
         ( f // {
           lang = "sp";
-          content = f.tp;
+          content = builtins.replaceStrings
+            [ " . " "."     "kala" ]
+            [ " . " "</br>" "kala2" ]
+            f.tp;
           path = "sp/${f.path}";
         })
       ];
@@ -67,6 +76,7 @@
 
   in rec {
 
+    # Imports files and splits them into different languages
     langSplit =
       (map (f: removeAttrs f langs)
 
@@ -80,6 +90,7 @@
       nixFiles))));
     
 
+    # converts my silly markup lang into html
     markdownConverted =
       map (f: f // { content = builtins.replaceStrings
         [ "↗️" "↘️" "⬆️" "⬇️" "▶️" "◀️" ]
@@ -87,7 +98,7 @@
         f.content; } )
       langSplit;
     
-
+    # puts content into templates
     result =
       map (f: if builtins.hasAttr "template" f
         then { path = f.path;

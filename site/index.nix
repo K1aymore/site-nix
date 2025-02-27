@@ -12,6 +12,6 @@ templates:
 
 	sv = "Välkommen till min webbsida!";
 	
-	tp = "moku";
+	tp = "kala mi li moku e ko. ni la mi pilin e ike. 󱤑󱦐󱤘󱦜󱦑󱦐󱥨󱦜󱤴󱦝󱦑󱤧󱤬󱤀";
 
 }

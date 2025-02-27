@@ -4,5 +4,5 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="/parts/style.css">
+<link rel="stylesheet" href="../parts/style.css">
 ''
