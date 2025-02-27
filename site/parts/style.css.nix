@@ -36,7 +36,7 @@ in
     }
     .sitelen-pona {
       font-family: sitelen-seli-kiwen-asuki;
-      font-size: 1.7rem;
+      font-size: 2rem;
     }
 
     body {

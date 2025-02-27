@@ -23,13 +23,7 @@
     ];
 
     binaries = [
-      ./site/parts/nasin-nanpa-4.0.2.otf
-      ./site/parts/linja-pona-4.9.otf
-      ./site/parts/FairfaxPonaHD.ttf
       ./site/parts/sitelen-seli-kiwen-asuki.ttf
-      ./site/parts/nishiki-teki-lili-pi-pss.otf
-      ./site/parts/nishiki-teki-lili.ttf
-      ./site/parts/sitelen-Antowi_rev02.otf
     ];
 
 
@@ -64,8 +58,8 @@
         ( f // {
           lang = "sp";
           content = builtins.replaceStrings
-            [ " . " "."     "kala" ]
-            [ " . " "</br>" "kala2" ]
+            [ ".." "," "."     "kala"  "akesi"  "soko"  ]
+            [ ".." ""  "</br>" "kala2" "akesi2" "soko" ]
             f.tp;
           path = "sp/${f.path}";
         })
