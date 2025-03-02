@@ -1,15 +1,24 @@
 { content, lang, ... }@inputs:
 
 
+''
+${import ./parts/head.nix inputs}
 
-import ./parts/head.nix inputs + ''
 </head>
-<body class="${if lang == "sp" then "sitelen-pona" else ""}">
+<body>
 
-<div class="center-margin">
-  <div class="center">
+${import ./parts/navbar.nix inputs}
+
+
+<div id="center-margin">
+  <div class="center${if lang == "tp-sp" then " sitelen-pona" else ""}">
   ${content}
   </div>
 </div>
 
-'' + import ./parts/footer.nix inputs
+${import ./parts/footer.nix inputs}
+
+
+</body>
+</html>
+ ''

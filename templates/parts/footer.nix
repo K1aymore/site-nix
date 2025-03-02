@@ -1,6 +1,8 @@
 { ... }:
 
 ''
-</body>
-</html>
+<div id="footer">
+
+
+</div>
 ''

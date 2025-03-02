@@ -59,7 +59,9 @@ in
       font-size: 1em;
     }
 
-    .centerMargin {
+
+
+    #centerMargin {
       width: 60%;
       margin: auto;
       background: ${base};

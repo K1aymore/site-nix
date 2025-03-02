@@ -30,7 +30,7 @@
     getFileName = f: builtins.substring 56 999 (toString f);
 
 
-    langs = [ "en" "sv" "tp" "sp" ];
+    langs = [ "en" "sv" "tp" "tp-sp" ];
 
     languageConversions = {
       en = f: f // {
@@ -56,17 +56,20 @@
         })
         # sitelen pona
         ( f // {
-          lang = "sp";
+          lang = "tp-sp";
           content = builtins.replaceStrings
             [ ".." "," "."     "kala"  "akesi"  "soko"  ]
             [ ".." ""  "</br>" "kala2" "akesi2" "soko" ]
             f.tp;
-          path = "sp/${f.path}";
+          path = "tp-sp/${f.path}";
         })
       ];
     };
 
-    langify = f: lang: (if builtins.hasAttr lang f then (builtins.getAttr lang languageConversions f) else []);
+    langify = f: lang:
+      if builtins.hasAttr lang f
+        then (builtins.getAttr lang languageConversions f)
+        else [];
 
   in rec {
 
@@ -100,7 +103,9 @@
         else f)
       markdownConverted;
 
+
     binaryResults = {};
+
 
     packages.x86_64-linux.default = pkgs.stdenv.mkDerivation {
       name = "klaymore.me";
@@ -110,15 +115,10 @@
       src = ./.;  # Include source files in the derivation
 
       buildPhase = ''
-        mkdir -p $out/comics
-        mkdir -p $out/sv/comics
-        mkdir -p $out/tp/comics
-        mkdir -p $out/sp/comics
-        mkdir -p $out/parts
         echo "building files..."
-        ${builtins.concatStringsSep "\n" (map (f: "echo '${f.content}' > $out/${f.path}") result)}
+        ${builtins.concatStringsSep "\n" (map (f: "mkdir -p $out/$(dirname ${f.path}) && echo '${f.content}' > $out/${f.path}") result)}
 
-        ${builtins.concatStringsSep "\n" (map (f: "cp '${f}' $out/${getFileName f}") binaries)}
+        ${builtins.concatStringsSep "\n" (map (f: "mkdir -p $out/$(dirname ${f}) && cp '${f}' $out/${getFileName f}") binaries)}
       '';
 
       installPhase = ''
