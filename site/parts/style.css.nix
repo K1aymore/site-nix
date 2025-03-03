@@ -15,7 +15,7 @@ let
   crust = "#11111b";
 
   maroon = "#eba0ac";
-  accent-color = maroon;
+  accent = maroon;
 in
 {
 
@@ -30,13 +30,15 @@ in
   content = ''
     @font-face {
       font-family: sitelen-seli-kiwen-asuki;
-      src: url('sitelen-seli-kiwen-asuki.ttf') format('truetype');
+      src: 
+        local("sitelen-seli-kiwen-asuki"),
+        url('sitelen-seli-kiwen-asuki.ttf') format('truetype');
       font-weight: lighter;
       font-style: normal;
     }
     .sitelen-pona {
       font-family: sitelen-seli-kiwen-asuki;
-      font-size: 2rem;
+      font-size: 2rem !important;
     }
 
     body {
@@ -44,6 +46,13 @@ in
       color: ${text};
     }
 
+    a {
+      color: ${accent};
+    }
+
+    a:hover {
+      color: ${subtext1};
+    }
 
     button {
       background: none;
@@ -62,9 +71,10 @@ in
 
 
     #centerMargin {
-      width: 60%;
-      margin: auto;
       background: ${base};
+      width: 40%;
+      margin: auto;
+      display: flex;
     }
 
     .center {

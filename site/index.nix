@@ -8,42 +8,14 @@ templates:
 
 	date = "2025-02-07";
 
-	en = "Welcome to my ↗️site!↘️";
+	en = "Welcome to my site!";
 
 	sv = "Välkommen till min webbsida!";
 	
 	tp = ''
-		toki ni li kepeken nimi pu ale.
-
-		telo li kama tan oko loje tu pi jan wan, li sitelen sike suwi lon anpa sinpin.
-
-		ona li wile tawa ma; taso ona li awen lon sije-lo, li pini lon len li weka.
-		
-		sona la, waso  en kala en pipi en akesi en soweli ale li ken pana sama.
-
-		taso pilin pi jan ni li suli la telo lukin li sin li wawa, li selo e ijo poka e tomo e noka e supa moku e pan e poki kiwen e monsi e luka e lawa e nena e kute e linja sewi kin. laso lete ni li lili e seli insa, li lape e ike toki, li open e ante, li esun e ko jaki e mu open: “a! aaaaaaa!!!”
-
-		kon pi kule ala li tan uta li kalama utala lon telo li nanpa mute li tawa mun li pa-
-		kala nasa e suno sewi.
-		
-		pimeja moli li kama namako e nasin tenpo.
-
-		“mi pakala.”
-
-		pona o kepeken alasa seme?
-		
-		mani anu unpa anu pu anu nimi ante li sama kili tan kasi pi lipu jelo moli.
-		
-		”sina wile ala ni!
-		sina wile mama e musi.
-		sina wile olin e meli e mije e tonsi.”
-
-		ona li jo e ilo palisa e sinpin tomo li pali e lupa.
-		telo li kama weka.
-		laso li kama walo.
-		jan li tawa lupa li tawa nasin open li tawa kulupu.
-		pona kama li wile e wawa, taso laso weka li kama ken e ni.
-		
-		󱤑󱦐󱤘󱦜󱦑󱦐󱥨󱦜󱤴󱦝󱦑󱤧󱤬󱤀'';
+	<p>
+		jan [Sitata] li sama waso alasa li pona lukin li jan lili pi jan sona sewi. ona en jan sama [Kowinta] pi jan sona sewi ante li kama suli lon pimeja tomo, lon suno pi telo linja, lon poka pi tomo tawa telo, lon pimeja pi ma kasi [Sawa], lon pimeja pi kasi kili. jan [Sitata] li lon telo la ona li pana sewi li telo e sijelo kepeken nasin sewi. suno li pimeja lili e selo walo ona. jan [Sitata] li lon ma kasi kili la kasi li pimeja e lukin ona. ona li musi li kute e kalama pi mama meli ona. ona li nasin sewi li kute e toki pi mama sona ona
+	</p>
+	'';
 
 }

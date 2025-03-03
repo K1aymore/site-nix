@@ -35,12 +35,13 @@
     languageConversions = {
       en = f: f // {
         lang = "en";
-        content = f.en;
+        prehtml = f.en;
+        path = "en/${f.path}";
       };
 
       sv = f: f // {
         lang = "sv";
-        content = f.sv;
+        prehtml = f.sv;
         path = "sv/${f.path}";
       };
 
@@ -48,7 +49,7 @@
         # latin toki pona
         ( f // {
           lang = "tp";
-          content = builtins.replaceStrings
+          prehtml = builtins.replaceStrings
             [ "&" ]
             [ " " ]
             f.tp;
@@ -57,9 +58,9 @@
         # sitelen pona
         ( f // {
           lang = "tp-sp";
-          content = builtins.replaceStrings
-            [ ".." "," "."     "kala"  "akesi"  "soko"  ]
-            [ ".." ""  "</br>" "kala2" "akesi2" "soko" ]
+          prehtml = builtins.replaceStrings
+            [ ".." ". " "." ","  "\nkala" " kala"  "\nakesi" " akesi" "soko"  ]
+            [ ".." "</br>" "" "" "\nkala2" " kala2" "\nakesi2" " akesi2" "soko" ]
             f.tp;
           path = "tp-sp/${f.path}";
         })
@@ -89,10 +90,12 @@
 
     # converts my silly markup lang into html
     markdownConverted =
-      map (f: f // { content = builtins.replaceStrings
-        [ "↗️" "↘️" "⬆️" "⬇️" "▶️" "◀️" ]
-        [ "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" ]
-        f.content; } )
+      map (f: if builtins.hasAttr "prehtml" f 
+        then f // { content = builtins.replaceStrings
+          [ "\n\n" "\n\t\t\n" "↗️" "↘️" "⬆️" "⬇️" "▶️" "◀️" ]
+          [ "</p><p>" "</p><p>" "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" ]
+          f.prehtml; }
+        else f)
       langSplit;
     
     # puts content into templates
