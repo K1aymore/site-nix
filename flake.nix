@@ -24,6 +24,9 @@
 
     binaries = [
       ./site/parts/sitelen-seli-kiwen-asuki.ttf
+      ./site/parts/sitelen-seli-kiwen-juniko.ttf
+      ./site/parts/nasin-nanpa-4.0.2.otf
+      ./site/parts/nasin-nanpa-4.0.2-UCSUR.otf
     ];
 
 

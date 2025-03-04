@@ -29,25 +29,43 @@ in
   # sitelen-Antowi: doesn't work? no kala eyes
   content = ''
     @font-face {
-      font-family: sitelen-seli-kiwen-asuki;
-      src: 
-        local("sitelen-seli-kiwen-asuki"),
+      font-family: "sitelen seli kiwen asuki";
+      src:
+        local("sitelen seli kiwen asuki"),
         url('sitelen-seli-kiwen-asuki.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: "sitelen seli kiwen juniko";
+      src:
+        local("sitelen seli kiwen juniko"),
+        url('sitelen-seli-kiwen-juniko.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: "nasin nanpa";
+      src:
+        local("nasin nanpa"),
+        url('nasin-nanpa-4.0.2.otf') format('opentype');
       font-weight: lighter;
-      font-style: normal;
+    }
+    @font-face {
+      font-family: "nasin nanpa ucsur";
+      src:
+        local("nasin nanpa ucsur"),
+        url('nasin-nanpa-4.0.2-UCSUR.otf') format('opentype');
+      font-weight: lighter;
+    }
+    .sp {
+      font-family: "nasin nanpa";
     }
     .sitelen-pona {
-      font-family: sitelen-seli-kiwen-asuki;
+      font-family: "nasin nanpa";
       font-size: 2rem !important;
     }
 
-    body {
-      background-color: ${mantle};
-      color: ${text};
-    }
 
     a {
       color: ${accent};
+      text-decoration: none;
     }
 
     a:hover {
@@ -65,23 +83,51 @@ in
       background: ${surface0};
       border: none;
       color: ${text};
-      font-size: 1em;
     }
 
 
+
+    body {
+      background-color: ${crust};
+      color: ${text};
+      font-size: 1.05em;
+      font-family: "Fira Code", "Helvetica", "Comic Sans", "nasin nanpa ucsur", "sitelen seli kiwen juniko", "linja lipamanka", "Fairfax HD", "linja sike", "linja pona", serif;
+    }
+
+    #navbar {
+      background: ${mantle};
+      width: 40%;
+      margin: auto;
+
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+
+    #langbar {
+      background: ${mantle};
+      width: 40%;
+      margin: auto;
+      
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-evenly;
+    }
 
     #centerMargin {
       background: ${base};
       width: 40%;
       margin: auto;
       display: flex;
+      flex-wrap: wrap;
     }
 
     .center {
       text-align: left;
       margin: 3%;
       color: ${text};
-      font-size: 1.05em;
     }
 
     .table {
