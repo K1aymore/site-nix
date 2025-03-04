@@ -19,6 +19,9 @@
     nixFiles = [
       ./site/index.nix
       ./site/comics/index.nix
+    ];
+
+    otherFiles = [
       ./site/parts/style.css.nix
     ];
 
@@ -39,13 +42,11 @@
       en = f: f // {
         lang = "en";
         prehtml = f.en;
-        path = "en/${f.path}";
       };
 
       sv = f: f // {
         lang = "sv";
         prehtml = f.sv;
-        path = "sv/${f.path}";
       };
 
       tp = f: [
@@ -56,7 +57,6 @@
             [ "&" ]
             [ " " ]
             f.tp;
-          path = "tp/${f.path}";
         })
         # sitelen pona
         ( f // {
@@ -65,7 +65,6 @@
             [ ".." ". " "." ","  "\nkala" " kala"  "\nakesi" " akesi" "soko"  ]
             [ ".." "</br>" "" "" "\nkala2" " kala2" "\nakesi2" " akesi2" "soko" ]
             f.tp;
-          path = "tp-sp/${f.path}";
         })
       ];
     };
@@ -87,27 +86,26 @@
       (map (f: if builtins.hasAttr "content" f then [f] else lib.flatten [ (map (langify f) langs) ])
 
       # import data
-      (map (f: import f templates // { path = builtins.replaceStrings [".css.nix" ".nix"] [".css" ".html"] (getFileName f); })
+      (map (f: import f templates // { path = builtins.replaceStrings [ ".nix" ] [ ".html" ] (getFileName f); })
       nixFiles))));
     
 
     # converts my silly markup lang into html
     markdownConverted =
-      map (f: if builtins.hasAttr "prehtml" f 
-        then f // { content = builtins.replaceStrings
+      map (f: f // { content = builtins.replaceStrings
           [ "\n\n" "\n\t\t\n" "↗️" "↘️" "⬆️" "⬇️" "▶️" "◀️" ]
           [ "</p><p>" "</p><p>" "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" ]
-          f.prehtml; }
-        else f)
+          f.prehtml; })
       langSplit;
     
     # puts content into templates
-    result =
-      map (f: if builtins.hasAttr "template" f
-        then { path = f.path;
-               content = import f.template f; }
-        else f)
+    pages =
+      map (f: (f // { content = import f.template f; }))
       markdownConverted;
+
+
+    other = (map (f: import f // { path = builtins.replaceStrings [".css.nix" ] [ ".css" ] (getFileName f); })
+      otherFiles);
 
 
     binaryResults = {};
@@ -122,7 +120,9 @@
 
       buildPhase = ''
         echo "building files..."
-        ${builtins.concatStringsSep "\n" (map (f: "mkdir -p $out/$(dirname ${f.path}) && echo '${f.content}' > $out/${f.path}") result)}
+        ${builtins.concatStringsSep "\n" (map (f: "mkdir -p $out/${f.lang}/$(dirname ${f.path}) && echo '${f.content}' > $out/${f.lang}/${f.path}") pages)}
+
+        ${builtins.concatStringsSep "\n" (map (f: "mkdir -p $out/$(dirname ${f.path}) && echo '${f.content}' > $out/${f.path}") other)}
 
         ${builtins.concatStringsSep "\n" (map (f: "mkdir -p $out/$(dirname ${f}) && cp '${f}' $out/${getFileName f}") binaries)}
       '';

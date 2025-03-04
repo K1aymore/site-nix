@@ -1,4 +1,3 @@
-templates:
 
 let
   text = "#cdd6f4";
@@ -58,7 +57,7 @@ in
       font-family: "nasin nanpa";
     }
     .sitelen-pona {
-      font-family: "nasin nanpa";
+      font-family: "sitelen seli kiwen asuki";
       font-size: 2rem !important;
     }
 
@@ -90,44 +89,40 @@ in
     body {
       background-color: ${crust};
       color: ${text};
-      font-size: 1.05em;
-      font-family: "Fira Code", "Helvetica", "Comic Sans", "nasin nanpa ucsur", "sitelen seli kiwen juniko", "linja lipamanka", "Fairfax HD", "linja sike", "linja pona", serif;
+      font-size: 2em;
+      font-family: "nasin nanpa ucsur", "sitelen seli kiwen juniko", serif;
     }
 
     #navbar {
-      background: ${mantle};
-      width: 40%;
-      margin: auto;
-
-      display: flex;
-      flex-wrap: wrap;
+      # background: ${mantle};
       align-items: center;
       justify-content: space-evenly;
+      display: flex;
+      flex-wrap: wrap;
     }
 
     #langbar {
-      background: ${mantle};
-      width: 40%;
-      margin: auto;
-      
-      display: flex;
-      flex-wrap: wrap;
+      # background: ${mantle};
       align-items: center;
       justify-content: space-evenly;
+      display: flex;
+      flex-wrap: wrap;
     }
 
     #centerMargin {
       background: ${base};
-      width: 40%;
+      width: 97%;
+      max-width: 30em;
       margin: auto;
-      display: flex;
-      flex-wrap: wrap;
     }
 
-    .center {
+    .content {
       text-align: left;
-      margin: 3%;
       color: ${text};
+      padding-top: 1%;
+      padding-left: 4%;
+      padding-right: 4%;
+      padding-bottom: 1%;
     }
 
     .table {
