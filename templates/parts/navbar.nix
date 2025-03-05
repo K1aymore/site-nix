@@ -6,10 +6,10 @@ in
 ''
 <div id="navbar">
 
-  <a class="navLink" href="/">Home</a>
-  <a class="navLink" href="/about">about</a>
-  <a class="navLink" href="/blog">blog</a>
-  <a class="navLink" href="/comics">comics</a>
+  <a class="navLink" href="/${lang}">klaymore.me</a>
+  <a class="navLink" href="/${lang}/about">about</a>
+  <a class="navLink" href="/${lang}/blog">blog</a>
+  <a class="navLink" href="/${lang}/comics">comics</a>
 
 </div>
 <div id="langbar">

@@ -4,9 +4,12 @@
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    sitelen-pona-UCSUR = {
+      url = "github:K1aymore/nix-utils?dir=sitelen-pona-UCSUR";
+    };
   };
 
-  outputs = { nixpkgs, ... }: let
+  outputs = { nixpkgs, sitelen-pona-UCSUR, ... }: let
     pkgs = nixpkgs.legacyPackages.x86_64-linux;
     lib = nixpkgs.lib;
 
@@ -53,17 +56,14 @@
         # latin toki pona
         ( f // {
           lang = "tp";
-          prehtml = builtins.replaceStrings
-            [ "&" ]
-            [ " " ]
-            f.tp;
+          prehtml = sitelen-pona-UCSUR.ucsur2lasina f.tp;
         })
         # sitelen pona
         ( f // {
           lang = "tp-sp";
           prehtml = builtins.replaceStrings
-            [ ".." ". " "." ","  "\nkala" " kala"  "\nakesi" " akesi" "soko"  ]
-            [ ".." "</br>" "" "" "\nkala2" " kala2" "\nakesi2" " akesi2" "soko" ]
+            [ "\n"  ]
+            [ "</br>" ]
             f.tp;
         })
       ];

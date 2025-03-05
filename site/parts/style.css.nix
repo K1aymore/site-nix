@@ -57,7 +57,7 @@ in
       font-family: "nasin nanpa";
     }
     .sitelen-pona {
-      font-family: "sitelen seli kiwen asuki";
+      font-family: "sitelen seli kiwen juniko";
       font-size: 2rem !important;
     }
 
