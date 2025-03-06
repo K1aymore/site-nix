@@ -31,12 +31,13 @@
     binaries = [
       ./site/parts/sitelen-seli-kiwen-asuki.ttf
       ./site/parts/sitelen-seli-kiwen-juniko.ttf
+      ./site/parts/sitelen-seli-kiwen-mono-juniko.ttf
       ./site/parts/nasin-nanpa-4.0.2.otf
       ./site/parts/nasin-nanpa-4.0.2-UCSUR.otf
     ];
 
 
-    getFileName = f: builtins.substring 56 999 (toString f);
+    getFileName = f: builtins.substring 56 (-1) (toString f);
 
 
     langs = [ "en" "sv" "tp" "tp-sp" ];
@@ -99,13 +100,13 @@
       langSplit;
     
     # puts content into templates
-    pages =
-      map (f: (f // { content = import f.template f; }))
-      markdownConverted;
+    pages = map (f: f // { content = import f.template f; })
+      (map (f: f // { sitelen-pona-UCSUR = sitelen-pona-UCSUR; })
+      markdownConverted);
 
 
-    other = (map (f: import f // { path = builtins.replaceStrings [".css.nix" ] [ ".css" ] (getFileName f); })
-      otherFiles);
+    other = map (f: import f // { path = builtins.replaceStrings [".css.nix" ] [ ".css" ] (getFileName f); })
+      otherFiles;
 
 
     binaryResults = {};

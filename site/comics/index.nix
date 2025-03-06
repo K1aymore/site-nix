@@ -4,12 +4,32 @@ templates:
 
 	template = templates.page;
 
-	title = "Main";
+	title = "comics";
 
 	date = "2025-02-07";
 
-	en = "Welcome to my site!";
+	en = ''
+	<p>
+		Welcome to my site!
+	</p>
+	'';
 
-	sv = "Välkommen till min webbsida!";
+	sv = ''
+	<p>
+		Välkommen till min webbsida!
+	</p>
+	'';
 	
+	tp = ''
+	<p>
+		󱤑󱦐Sitata󱦑󱤧󱥖󱥴󱤃󱤧󱥔󱤮󱤧󱤑󱤨󱥍󱤑󱥡󱥚
+		󱥆󱤊󱤑󱥖󱦐Kowinta󱦑󱥍󱤑󱥡󱥚󱤆󱤧󱤖󱥣󱤬󱥏󱥭, 󱤬󱥤󱥍󱥪󱤩, 󱤬󱥒󱥍󱥭󱥩󱥪, 󱤬󱥏󱥍󱤰󱤗󱦐Sawa󱦑, 󱤬󱥏󱥍󱤗󱤚
+		󱤑󱦐Sitata󱦑󱤧󱤬󱥪󱤡󱥆󱤧󱥌󱥚󱤧󱥪󱤉󱥛󱤙󱤿󱥚
+		󱥤󱤧󱥏󱤨󱤉󱥘󱥲󱥆
+		󱤑󱦐Sitata󱦑󱤧󱤬󱤰󱤗󱤚󱤡󱤗󱤧󱥏󱤉󱤮󱥆
+		󱥆󱤧󱤻󱤧󱤠󱤉󱤕󱥍󱤱󱤳󱥆
+		󱥆󱤧󱤿󱥚󱤧󱤠󱤉󱥬󱥍󱤱󱥡󱥆
+	</p>
+	'';
+
 }

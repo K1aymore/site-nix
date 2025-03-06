@@ -4,7 +4,7 @@ templates:
 
 	template = templates.page;
 
-	title = "Main";
+	title = "main";
 
 	date = "2025-02-07";
 
@@ -23,7 +23,7 @@ templates:
 	tp = ''
 	<p>
 		󱤑󱦐Sitata󱦑󱤧󱥖󱥴󱤃󱤧󱥔󱤮󱤧󱤑󱤨󱥍󱤑󱥡󱥚
-		󱥆󱤊󱤑󱥖󱦐Kowinta󱦑󱥍󱤑󱥡󱥚󱤆󱤧󱤖󱥣󱤬󱥏󱥭,󱤬󱥤󱥍󱥪󱤩,󱤬󱥒󱥍󱥭󱥩󱥪,󱤬󱥏󱥍󱤰󱤗󱦐Sawa󱦑,󱤬󱥏󱥍󱤗󱤚
+		󱥆󱤊󱤑󱥖󱦐Kowinta󱦑󱥍󱤑󱥡󱥚󱤆󱤧󱤖󱥣󱤬󱥏󱥭, 󱤬󱥤󱥍󱥪󱤩, 󱤬󱥒󱥍󱥭󱥩󱥪, 󱤬󱥏󱥍󱤰󱤗󱦐Sawa󱦑, 󱤬󱥏󱥍󱤗󱤚
 		󱤑󱦐Sitata󱦑󱤧󱤬󱥪󱤡󱥆󱤧󱥌󱥚󱤧󱥪󱤉󱥛󱤙󱤿󱥚
 		󱥤󱤧󱥏󱤨󱤉󱥘󱥲󱥆
 		󱤑󱦐Sitata󱦑󱤧󱤬󱤰󱤗󱤚󱤡󱤗󱤧󱥏󱤉󱤮󱥆

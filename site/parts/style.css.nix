@@ -15,6 +15,9 @@ let
 
   maroon = "#eba0ac";
   accent = maroon;
+
+  baseFont = "sitelen seli kiwen juniko";
+  baseFontSize = "1.9rem";
 in
 {
 
@@ -40,25 +43,18 @@ in
         url('sitelen-seli-kiwen-juniko.ttf') format('truetype');
     }
     @font-face {
-      font-family: "nasin nanpa";
+      font-family: "sitelen seli kiwen mono juniko";
       src:
-        local("nasin nanpa"),
-        url('nasin-nanpa-4.0.2.otf') format('opentype');
-      font-weight: lighter;
-    }
-    @font-face {
-      font-family: "nasin nanpa ucsur";
-      src:
-        local("nasin nanpa ucsur"),
-        url('nasin-nanpa-4.0.2-UCSUR.otf') format('opentype');
-      font-weight: lighter;
-    }
-    .sp {
-      font-family: "nasin nanpa";
+        local("sitelen seli kiwen mono juniko"),
+        url('sitelen-seli-kiwen-mono-juniko.ttf') format('truetype');
     }
     .sitelen-pona {
       font-family: "sitelen seli kiwen juniko";
       font-size: 2rem !important;
+      text-indent: 2rem hanging each-line;
+    }
+    .latin {
+      font-family: "${baseFont}" !important;
     }
 
 
@@ -89,8 +85,8 @@ in
     body {
       background-color: ${crust};
       color: ${text};
-      font-size: 2em;
-      font-family: "nasin nanpa ucsur", "sitelen seli kiwen juniko", serif;
+      font-size: ${baseFontSize};
+      font-family: "${baseFont}", "sitelen seli kiwen juniko", "nasin nanpa ucsur", serif;
     }
 
     #navbar {
