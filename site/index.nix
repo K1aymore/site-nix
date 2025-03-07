@@ -9,27 +9,21 @@ templates:
 	date = "2025-02-07";
 
 	en = ''
-	<p>
-		Welcome to my site!
-	</p>
+		This is my website wow crazy
 	'';
 
 	sv = ''
-	<p>
-		Välkommen till min webbsida!
-	</p>
+		Det här är min webbsida waow
 	'';
 	
-	tp = ''
-	<p>
-		󱤑󱦐Sitata󱦑󱤧󱥖󱥴󱤃󱤧󱥔󱤮󱤧󱤑󱤨󱥍󱤑󱥡󱥚
+	tp =
+	''󱤑󱦐Sitata󱦑󱤧󱥖󱥴󱤃󱤧󱥔󱤮󱤧󱤑󱤨󱥍󱤑󱥡󱥚
 		󱥆󱤊󱤑󱥖󱦐Kowinta󱦑󱥍󱤑󱥡󱥚󱤆󱤧󱤖󱥣󱤬󱥏󱥭, 󱤬󱥤󱥍󱥪󱤩, 󱤬󱥒󱥍󱥭󱥩󱥪, 󱤬󱥏󱥍󱤰󱤗󱦐Sawa󱦑, 󱤬󱥏󱥍󱤗󱤚
 		󱤑󱦐Sitata󱦑󱤧󱤬󱥪󱤡󱥆󱤧󱥌󱥚󱤧󱥪󱤉󱥛󱤙󱤿󱥚
 		󱥤󱤧󱥏󱤨󱤉󱥘󱥲󱥆
 		󱤑󱦐Sitata󱦑󱤧󱤬󱤰󱤗󱤚󱤡󱤗󱤧󱥏󱤉󱤮󱥆
 		󱥆󱤧󱤻󱤧󱤠󱤉󱤕󱥍󱤱󱤳󱥆
 		󱥆󱤧󱤿󱥚󱤧󱤠󱤉󱥬󱥍󱤱󱥡󱥆
-	</p>
 	'';
 
 }

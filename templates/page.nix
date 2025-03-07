@@ -14,7 +14,9 @@ ${import ./parts/head.nix inputs}
     <h3>
       ${title}
     </h3>
-    ${content}
+    <p>
+      ${content}
+    </p>
   </div>
 </div>
 

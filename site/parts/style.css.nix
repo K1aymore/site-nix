@@ -50,8 +50,7 @@ in
     }
     .sitelen-pona {
       font-family: "sitelen seli kiwen juniko";
-      font-size: 2rem !important;
-      text-indent: 2rem hanging each-line;
+      text-indent: ${baseFontSize} hanging each-line;
     }
     .latin {
       font-family: "${baseFont}" !important;
