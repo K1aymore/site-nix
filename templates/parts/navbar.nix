@@ -11,14 +11,17 @@ in
 <div id="navbar">
 
   <a class="navLink" href="/${lang}">klaymore.me</a>
-  <a class="navLink" href="/${lang}/about">
+  <!-- <a class="navLink" href="/${lang}/about">
     ${langPick { en = "about"; sv = "om"; tp-sp = "󱥡󱥁"; }}
-  </a>
+  </a> -->
   <a class="navLink" href="/${lang}/blog">
-    ${langPick { en = "blog"; sv = "blogg"; tp-sp = "󱥠"; }}
+    ${langPick { en = "blog"; sv = "blogg"; tp-sp = "󱥠󱥡"; }}
   </a>
   <a class="navLink" href="/${lang}/comics">
     ${langPick { en = "comics"; sv = "webbserier"; tp-sp = "󱥠󱤪"; }}
+  </a>
+  <a class="navLink" href="/${lang}/art">
+    ${langPick { en = "art"; sv = "konstverk"; tp-sp = "󱤪󱤻"; }}
   </a>
 
 </div>

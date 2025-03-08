@@ -31,12 +31,6 @@ in
   # sitelen-Antowi: doesn't work? no kala eyes
   content = ''
     @font-face {
-      font-family: "sitelen seli kiwen asuki";
-      src:
-        local("sitelen seli kiwen asuki"),
-        url('sitelen-seli-kiwen-asuki.ttf') format('truetype');
-    }
-    @font-face {
       font-family: "sitelen seli kiwen juniko";
       src:
         local("sitelen seli kiwen juniko"),
@@ -85,7 +79,7 @@ in
       background-color: ${crust};
       color: ${text};
       font-size: ${baseFontSize};
-      font-family: "${baseFont}", "sitelen seli kiwen juniko", "nasin nanpa ucsur", serif;
+      font-family: "${baseFont}", "sitelen seli kiwen juniko", serif;
     }
 
     #navbar {

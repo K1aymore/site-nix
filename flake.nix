@@ -29,11 +29,8 @@
     ];
 
     binaries = [
-      ./site/parts/sitelen-seli-kiwen-asuki.ttf
       ./site/parts/sitelen-seli-kiwen-juniko.ttf
       ./site/parts/sitelen-seli-kiwen-mono-juniko.ttf
-      ./site/parts/nasin-nanpa-4.0.2.otf
-      ./site/parts/nasin-nanpa-4.0.2-UCSUR.otf
     ];
 
 
@@ -114,14 +111,17 @@
 
     packages.x86_64-linux.default = pkgs.stdenv.mkDerivation {
       name = "klaymore.me";
-
       system = builtins.currentSystem;
-
       src = ./.;  # Include source files in the derivation
+
+      buildInputs = [ pkgs.brotli ];
 
       buildPhase = ''
         echo "building files..."
-        ${builtins.concatStringsSep "\n" (map (f: "mkdir -p $out/${f.lang}/$(dirname ${f.path}) && echo '${f.content}' > $out/${f.lang}/${f.path}") pages)}
+
+        ${builtins.concatStringsSep "\n" (map (f:
+          ''mkdir -p $out/${f.lang}/$(dirname ${f.path}) && echo '${f.content}' > $out/${f.lang}/${f.path} && brotli -q 11 $out/${f.lang}/${f.path}''
+        ) pages)}
 
         ${builtins.concatStringsSep "\n" (map (f: "mkdir -p $out/$(dirname ${f.path}) && echo '${f.content}' > $out/${f.path}") other)}
 
