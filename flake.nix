@@ -29,6 +29,7 @@
     ];
 
     binaries = [
+      ./site/parts/sitelen-seli-kiwen-asuki.ttf
       ./site/parts/sitelen-seli-kiwen-juniko.ttf
       ./site/parts/sitelen-seli-kiwen-mono-juniko.ttf
     ];
@@ -60,8 +61,8 @@
         ( f // {
           lang = "tp-sp";
           prehtml = builtins.replaceStrings
-            [ "\n"  ]
-            [ "</br>" ]
+            [ "\n"    "󱤔"  ]
+            [ "</br>" "<span class=\"asuki\">kala2</span>" ]
             f.tp;
         })
       ];
@@ -91,8 +92,8 @@
     # converts my silly markup lang into html
     markdownConverted =
       map (f: f // { content = builtins.replaceStrings
-          [ "\n\n" "\n\t\t\n" "↗️" "↘️" "⬆️" "⬇️" "▶️" "◀️" ]
-          [ "</p><p>" "</p><p>" "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" ]
+          [ "'" "\n\n" "\n\t\t\n" "↗️" "↘️" "⬆️" "⬇️" "▶️" "◀️" ]
+          [ "’" "</p><p>" "</p><p>" "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" ]
           f.prehtml; })
       langSplit;
     

@@ -17,7 +17,7 @@ let
   accent = maroon;
 
   baseFont = "sitelen seli kiwen juniko";
-  baseFontSize = "1.9rem";
+  baseFontSize = "1.65rem";
 in
 {
 
@@ -31,6 +31,12 @@ in
   # sitelen-Antowi: doesn't work? no kala eyes
   content = ''
     @font-face {
+      font-family: "sitelen seli kiwen asuki";
+      src:
+        local("sitelen seli kiwen asuki"),
+        url('sitelen-seli-kiwen-asuki.ttf') format('truetype');
+    }
+    @font-face {
       font-family: "sitelen seli kiwen juniko";
       src:
         local("sitelen seli kiwen juniko"),
@@ -41,6 +47,9 @@ in
       src:
         local("sitelen seli kiwen mono juniko"),
         url('sitelen-seli-kiwen-mono-juniko.ttf') format('truetype');
+    }
+    .asuki {
+      font-family: "sitelen seli kiwen asuki";
     }
     .sitelen-pona {
       font-family: "sitelen seli kiwen juniko";
@@ -101,7 +110,7 @@ in
     #centerMargin {
       background: ${base};
       width: 97%;
-      max-width: 30em;
+      max-width: 50rem;
       margin: auto;
     }
 
