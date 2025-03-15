@@ -14,100 +14,109 @@
     lib = nixpkgs.lib;
 
     templates = {
-      page = ./site/_templates/page.nix;
-      blog = ./site/_templates/page.nix;
-      comic = ./site/_templates/comic.nix;
+      page = ./templates/page.nix;
+      blog = ./templates/page.nix;
+      comic = ./templates/comic.nix;
     };
 
-    nixFiles = [
-      ./site/index.nix
-      ./site/comics/index.nix
-    ];
-
-    otherFiles = [
-      ./site/parts/style.css.nix
-    ];
-
-    binaries = [
-      ./site/parts/sitelen-seli-kiwen-asuki.ttf
-      ./site/parts/sitelen-seli-kiwen-juniko.ttf
-      ./site/parts/sitelen-seli-kiwen-mono-juniko.ttf
-    ];
 
 
-    getFileName = f: builtins.substring 56 (-1) (toString f);
+    getFileNameConverted = n: builtins.replaceStrings
+      [ ".css.nix" ".nix"  ]
+      [ ".css"     ".html" ]
+      n;
+    getPath = path: builtins.concatStringsSep "/" path;
+    getPathConverted = path: getFileNameConverted (getPath path);
+    getDirPath = path: getPath (lib.dropEnd 1 path);
 
 
     langs = [ "en" "sv" "tp" "tp-sp" ];
 
-    languageConversions = {
+
+
+    loadFile = path: lang:
+      if lib.hasSuffix ".nix" (lib.last path)
+      then loadNixFile path lang
+      else ./site + ("/" + getPath path);
+    
+
+    loadNixFile = path: lang: let
+      imported = import (./site + ("/" + getPath path)) { inherit templates; };
+    in
+      builtins.toFile (getFileNameConverted (lib.last path))
+        (imported.content or (
+          (import imported.template) ((langConvert.${lang} imported) // {inherit sitelen-pona-UCSUR; path = getPath path;})
+        ));
+
+
+
+
+    langConvert = {
       en = f: f // {
         lang = "en";
-        prehtml = f.en;
+        content = markdownConvert f.en;
       };
 
       sv = f: f // {
         lang = "sv";
-        prehtml = f.sv;
+        content = markdownConvert f.sv;
       };
 
       tp = f: [
         # latin toki pona
         ( f // {
           lang = "tp";
-          prehtml = sitelen-pona-UCSUR.ucsur2lasina f.tp;
+          content = markdownConvert (sitelen-pona-UCSUR.ucsur2lasina f.tp);
         })
         # sitelen pona
         ( f // {
           lang = "tp-sp";
-          prehtml = builtins.replaceStrings
+          content = builtins.replaceStrings
             [ "\n"    "󱤔"  ]
             [ "</br>" "<span class=\"asuki\">kala2</span>" ]
-            f.tp;
+            (markdownConvert f.tp);
         })
       ];
     };
 
-    langify = f: lang:
-      if builtins.hasAttr lang f
-        then (builtins.getAttr lang languageConversions f)
-        else [];
+    markdownConvert = s: builtins.replaceStrings
+      [ "'" "\n\n" "\n\t\t\n" "↗️" "↘️" "⬆️" "⬇️" "▶️" "◀️" ]
+      [ "’" "</p><p>" "</p><p>" "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" ]
+      s;
+
 
   in rec {
 
-    # Imports files and splits them into different languages
-    langSplit =
-      (map (f: removeAttrs f langs)
 
-      # separate languages
-      # the flattening is so the empty lists go away
-      (builtins.concatLists
-      (map (f: if builtins.hasAttr "content" f then [f] else lib.flatten [ (map (langify f) langs) ])
-
-      # import data
-      (map (f: import f templates // { path = builtins.replaceStrings [ ".nix" ] [ ".html" ] (getFileName f); })
-      nixFiles))));
-    
-
-    # converts my silly markup lang into html
-    markdownConverted =
-      map (f: f // { content = builtins.replaceStrings
-          [ "'" "\n\n" "\n\t\t\n" "↗️" "↘️" "⬆️" "⬇️" "▶️" "◀️" ]
-          [ "’" "</p><p>" "</p><p>" "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" ]
-          f.prehtml; })
-      langSplit;
-    
-    # puts content into templates
-    pages = map (f: f // { content = import f.template f; })
-      (map (f: f // { sitelen-pona-UCSUR = sitelen-pona-UCSUR; })
-      markdownConverted);
+    filesList = lib.collect (v: builtins.isPath v) site;
 
 
-    other = map (f: import f // { path = builtins.replaceStrings [".css.nix" ] [ ".css" ] (getFileName f); })
-      otherFiles;
+    # value of attrs is path to file in store
+    site = {
+      en = getLang "en";
+      sv = getLang "sv";
+    };
 
 
-    binaryResults = {};
+    getLang = lang: lib.mapAttrsRecursive (path: val: loadFile path lang) src;
+
+
+    src = getDir ./site;
+
+
+    # Recursively constructs an attrset of a given folder, recursing on directories, value of attrs is the filetype
+    getDir = dir: lib.mapAttrs
+      (file: type:
+        if type == "directory" then getDir "${dir}/${file}" else type
+      )
+      (builtins.readDir dir);
+
+
+
+    linkCommands = lib.collect lib.isString
+      (lib.mapAttrsRecursive (path: value:
+        ''mkdir -p $out/${getDirPath path} && ln -s ${value} $out/${getPathConverted path}'')
+        site);
 
 
     packages.x86_64-linux.default = pkgs.stdenv.mkDerivation {
@@ -120,13 +129,7 @@
       buildPhase = ''
         echo "building files..."
 
-        ${builtins.concatStringsSep "\n" (map (f:
-          ''mkdir -p $out/${f.lang}/$(dirname ${f.path}) && echo '${f.content}' > $out/${f.lang}/${f.path} && brotli -q 11 $out/${f.lang}/${f.path}''
-        ) pages)}
-
-        ${builtins.concatStringsSep "\n" (map (f: "mkdir -p $out/$(dirname ${f.path}) && echo '${f.content}' > $out/${f.path}") other)}
-
-        ${builtins.concatStringsSep "\n" (map (f: "mkdir -p $out/$(dirname ${f}) && cp '${f}' $out/${getFileName f}") binaries)}
+        ${builtins.concatStringsSep "\n" linkCommands}
       '';
 
       installPhase = ''
