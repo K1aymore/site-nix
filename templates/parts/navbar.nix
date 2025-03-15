@@ -20,9 +20,9 @@ in
   <a class="navLink" href="/${lang}/comics">
     ${langPick { en = "comics"; sv = "webbserier"; tp-sp = "󱥠󱤪"; }}
   </a>
-  <a class="navLink" href="/${lang}/art">
+  <!-- <a class="navLink" href="/${lang}/art">
     ${langPick { en = "art"; sv = "konstverk"; tp-sp = "󱤪󱤻"; }}
-  </a>
+  </a> -->
 
 </div>
 <div id="langbar">

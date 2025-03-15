@@ -61,21 +61,18 @@
         content = markdownConvert f.sv;
       };
 
-      tp = f: [
-        # latin toki pona
-        ( f // {
+      tp = f: f // {
           lang = "tp";
           content = markdownConvert (sitelen-pona-UCSUR.ucsur2lasina f.tp);
-        })
-        # sitelen pona
-        ( f // {
-          lang = "tp-sp";
-          content = builtins.replaceStrings
-            [ "\n"    "󱤔"  ]
-            [ "</br>" "<span class=\"asuki\">kala2</span>" ]
-            (markdownConvert f.tp);
-        })
-      ];
+        };
+
+      tp-sp = f: f // {
+        lang = "tp-sp";
+        content = builtins.replaceStrings
+          [ "\n"    "󱤔"  ]
+          [ "</br>" "<span class=\"asuki\">kala2</span>" ]
+          (markdownConvert f.tp);
+      };
     };
 
     markdownConvert = s: builtins.replaceStrings
@@ -91,6 +88,8 @@
       parts = loadDir ./templates/globals "en";
       en = loadDir ./src "en";
       sv = loadDir ./src "sv";
+      tp = loadDir ./src "tp";
+      tp-sp = loadDir ./src "tp-sp";
     };
 
 
