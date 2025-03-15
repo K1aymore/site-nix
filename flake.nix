@@ -14,9 +14,9 @@
     lib = nixpkgs.lib;
 
     templates = {
-      page = ./templates/page.nix;
-      blog = ./templates/page.nix;
-      comic = ./templates/comic.nix;
+      page = ./site/_templates/page.nix;
+      blog = ./site/_templates/page.nix;
+      comic = ./site/_templates/comic.nix;
     };
 
     nixFiles = [
@@ -113,7 +113,7 @@
     packages.x86_64-linux.default = pkgs.stdenv.mkDerivation {
       name = "klaymore.me";
       system = builtins.currentSystem;
-      src = ./.;  # Include source files in the derivation
+      src = ./site;
 
       buildInputs = [ pkgs.brotli ];
 
