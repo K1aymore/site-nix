@@ -34,20 +34,19 @@
 
 
 
-    loadFile = path: lang:
+    getInputPath = dir: path: lang:
       if lib.hasSuffix ".nix" (lib.last path)
-      then loadNixFile path lang
-      else ./site + ("/" + getPath path);
+      then loadNixFile dir path lang
+      else dir + ("/" + getPath path);
     
 
-    loadNixFile = path: lang: let
-      imported = import (./site + ("/" + getPath path)) { inherit templates; };
+    loadNixFile = dir: path: lang: let
+      imported = import (dir + ("/" + getPath path)) { inherit templates; };
     in
       builtins.toFile (getFileNameConverted (lib.last path))
         (imported.content or (
-          (import imported.template) ((langConvert.${lang} imported) // {inherit sitelen-pona-UCSUR; path = getPath path;})
+          (import imported.template) ((langConvert.${lang} imported) // {inherit sitelen-pona-UCSUR; path = getPathConverted path;})
         ));
-
 
 
 
@@ -87,21 +86,15 @@
 
   in rec {
 
-
-    filesList = lib.collect (v: builtins.isPath v) site;
-
-
     # value of attrs is path to file in store
     site = {
-      en = getLang "en";
-      sv = getLang "sv";
+      parts = loadDir ./templates/globals "en";
+      en = loadDir ./src "en";
+      sv = loadDir ./src "sv";
     };
 
 
-    getLang = lang: lib.mapAttrsRecursive (path: val: loadFile path lang) src;
-
-
-    src = getDir ./site;
+    loadDir = dir: lang: lib.mapAttrsRecursive (path: val: getInputPath dir path lang) (getDir dir);
 
 
     # Recursively constructs an attrset of a given folder, recursing on directories, value of attrs is the filetype
@@ -122,7 +115,7 @@
     packages.x86_64-linux.default = pkgs.stdenv.mkDerivation {
       name = "klaymore.me";
       system = builtins.currentSystem;
-      src = ./site;
+      src = ./src;
 
       buildInputs = [ pkgs.brotli ];
 
