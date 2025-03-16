@@ -30,6 +30,25 @@ in
   # nishiki-teki-lili: thicker than sitelen-seli. nice cartouches. kala eyes
   # nishiki-teki-lili-pi-pss: same but more space around punctuation. kala eyes
   # sitelen-Antowi: doesn't work? no kala eyes
+
+
+    # floating vertical sidebar
+    # @media (width >= 90rem) {
+    #   #navbar {
+    #     position: fixed;
+    #     height: auto;
+    #     right: 10%;
+    #     top: 25%;
+    #     width: auto;
+    #     flex-direction: column;
+    #     padding: 1rem 2rem;
+    #   }
+    #   .navbarSection {
+    #     flex-direction: column;
+    #   }
+    # }
+
+
   content = ''
     @font-face {
       font-family: "sitelen seli kiwen asuki";
@@ -93,19 +112,27 @@ in
     }
 
     #navbar {
-      # background: ${mantle};
+      background: ${base};
+      width: 97%;
+      max-width: 50rem;
+      margin: auto;
+    }
+
+    .navbarSection {
       align-items: center;
       justify-content: space-evenly;
       display: flex;
       flex-wrap: wrap;
     }
 
-    #langbar {
-      # background: ${mantle};
-      align-items: center;
-      justify-content: space-evenly;
-      display: flex;
-      flex-wrap: wrap;
+
+    hr {
+      display: block;
+      height: 1px;
+      border: 0;
+      border-top: 1px solid ${overlay1};
+      margin: 1rem 0;
+      padding: 0;
     }
 
     #centerMargin {

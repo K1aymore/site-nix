@@ -7,9 +7,9 @@ ${import ./parts/head.nix inputs}
 </head>
 <body>
 
-<div id="centerMargin">
-  ${import ./parts/navbar.nix inputs}
+${import ./parts/navbar.nix inputs}
 
+<div id="centerMargin">
   <div class="content${if lang == "tp-sp" then " sitelen-pona" else ""}">
     <h3>
       ${title}
