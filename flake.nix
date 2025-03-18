@@ -58,20 +58,25 @@
 
       sv = f: f // {
         lang = "sv";
-        content = markdownConvert f.sv;
+        content = markdownConvert f.sv or f.en;
       };
 
       tp = f: f // {
-          lang = "tp";
-          content = markdownConvert (sitelen-pona-UCSUR.ucsur2lasina f.tp);
-        };
+        lang = "tp";
+        content = markdownConvert (sitelen-pona-UCSUR.ucsur2lasina f.tp or f.en);
+      };
 
       tp-sp = f: f // {
         lang = "tp-sp";
         content = builtins.replaceStrings
           [ "\n"    "󱤔"  ]
           [ "</br>" "<span class=\"asuki\">kala2</span>" ]
-          (markdownConvert f.tp);
+          (markdownConvert f.tp or f.en);
+      };
+
+      tp-hg = f: f // {
+        lang = "tp-hg";
+        content = markdownConvert f.tp-hg or f.en;
       };
     };
 
@@ -90,6 +95,7 @@
       sv = loadDir ./src "sv";
       tp = loadDir ./src "tp";
       tp-sp = loadDir ./src "tp-sp";
+      tp-hg = loadDir ./src "tp-hg";
       "favicon.ico" = getInputPath ./globals [ "favicon.ico" ] "binary";
     };
 

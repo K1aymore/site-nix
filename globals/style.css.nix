@@ -68,6 +68,14 @@ in
         local("sitelen seli kiwen mono juniko"),
         url('sitelen-seli-kiwen-mono-juniko.ttf') format('truetype');
     }
+    @font-face {
+      font-family: "Ownglyph Berry RW";
+      src:
+        local("Ownglyph Berry RW"),
+        url('Ownglyph-Berry-RW.ttf') format('truetype');
+    }
+
+
     .asuki {
       font-family: "sitelen seli kiwen asuki";
     }
@@ -78,6 +86,14 @@ in
     .latin {
       font-family: "${baseFont}" !important;
     }
+
+    body {
+      background-color: ${crust};
+      color: ${text};
+      font-size: ${baseFontSize};
+      font-family: "${baseFont}", "sitelen seli kiwen juniko", "Ownglyph Berry RW", serif;
+    }
+
 
 
     a {
@@ -104,13 +120,6 @@ in
 
 
 
-    body {
-      background-color: ${crust};
-      color: ${text};
-      font-size: ${baseFontSize};
-      font-family: "${baseFont}", "sitelen seli kiwen juniko", serif;
-    }
-
     #navbar {
       background: ${base};
       width: 97%;
@@ -119,11 +128,33 @@ in
     }
 
     .navbarSection {
-      align-items: center;
       justify-content: space-evenly;
       display: flex;
       flex-wrap: wrap;
     }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      justify-content: center;
+      display: inline-block;
+    }
+
+    nav ul li {
+      display: none;
+    }
+
+    nav ul:hover li {
+      display: block;
+      text-align: center;
+    }
+
+    nav ul:hover .tpDeco {
+      visibility: hidden;
+    }
+
+
 
 
     hr {

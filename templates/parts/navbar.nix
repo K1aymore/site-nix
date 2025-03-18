@@ -8,7 +8,7 @@ let
     else input.${lang} or input.en;
 in
 ''
-<div id="navbar">
+<nav id="navbar">
   <div class="navbarSection">
     <a class="navLink" href="/${lang}">klaymore.me</a>
     <!-- <a class="navLink" href="/${lang}/about">
@@ -26,10 +26,13 @@ in
 
   </div>
   <div class="navbarSection">
-    <a class="navLink" href="/en/${dir}">english</a>
+    <a class="navLink" href="/en/${dir}">　english</a>
     <a class="navLink" href="/sv/${dir}">svenska</a>
-    <a class="navLink" href="/tp/${dir}">toki pona</a>
-    <a class="navLink" href="/tp-sp/${dir}">󱥠‍󱥔</a>
+    <ul>
+      <a class="navLink" href="/tp/${dir}"><span class="tpDeco">󱥬‍󱥔</span>toki pona<span class="tpDeco">　</span></a>
+      <li value="󱥠‍󱥔"><a class="navLink" href="/tp-sp/${dir}">󱥠‍󱥔</a></li>
+      <li value="hangeul"><a class="navLink" href="/tp-hg/${dir}">한글</a></li>
+    </ul>
   </div>
-</div>
+</nav>
 ''
