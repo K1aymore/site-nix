@@ -85,11 +85,12 @@
 
     # value of attrs is path to file in store
     site = {
-      parts = loadDir ./templates/globals "en";
+      parts = loadDir ./globals "binary";
       en = loadDir ./src "en";
       sv = loadDir ./src "sv";
       tp = loadDir ./src "tp";
       tp-sp = loadDir ./src "tp-sp";
+      "favicon.ico" = getInputPath ./globals [ "favicon.ico" ] "binary";
     };
 
 
