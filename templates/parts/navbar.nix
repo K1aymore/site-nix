@@ -5,6 +5,8 @@ let
   sitelen = lang == "tp-sp";
   langPick = input: if lang == "tp"
     then sitelen-pona-UCSUR.ucsur2lasina input.tp-sp or input.en
+    else if lang == "tp-jp"
+    then sitelen-pona-UCSUR.ucsur2hiragana input.tp-sp or input.en
     else input.${lang} or input.en;
 in
 ''
@@ -26,12 +28,14 @@ in
 
   </div>
   <div class="navbarSection">
-    <a class="navLink" href="/en/${dir}">　english</a>
+    <a class="navLink" href="/en/${dir}">english</a>
     <a class="navLink" href="/sv/${dir}">svenska</a>
     <ul>
-      <a class="navLink" href="/tp/${dir}"><span class="tpDeco">󱥬‍󱥔</span>toki pona<span class="tpDeco">　</span></a>
+      <span class="navLink">󱥬‍󱥔toki pona</span>
+      <li value="toki pona"><a class="navLink" href="/tp/${dir}">toki pona</a></li>
       <li value="󱥠‍󱥔"><a class="navLink" href="/tp-sp/${dir}">󱥠‍󱥔</a></li>
-      <li value="hangeul"><a class="navLink" href="/tp-hg/${dir}">한글</a></li>
+      <li value="いらかな"><a class="navLink" href="/tp-jp/${dir}">いらかな</a></li>
+      <li value="안구"><a class="navLink" href="/tp-hg/${dir}">안구</a></li>
     </ul>
   </div>
 </nav>

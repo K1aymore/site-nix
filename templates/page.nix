@@ -10,7 +10,7 @@ ${import ./parts/head.nix inputs}
 ${import ./parts/navbar.nix inputs}
 
 <div id="centerMargin">
-  <div class="content${if lang == "tp-sp" then " sitelen-pona" else ""}">
+  <div class="content${if (lang == "tp-sp" || lang == "tp-jp") then " sitelen-pona" else ""}">
     <h3>
       ${title}
     </h3>

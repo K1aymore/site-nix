@@ -69,6 +69,12 @@ in
         url('sitelen-seli-kiwen-mono-juniko.ttf') format('truetype');
     }
     @font-face {
+      font-family: "natumemozi";
+      src:
+        local("natumemozi"),
+        url('natumemozi.ttf') format('truetype');
+    }
+    @font-face {
       font-family: "Ownglyph Berry RW";
       src:
         local("Ownglyph Berry RW"),
@@ -80,7 +86,6 @@ in
       font-family: "sitelen seli kiwen asuki";
     }
     .sitelen-pona {
-      font-family: "sitelen seli kiwen juniko";
       text-indent: ${baseFontSize} hanging each-line;
     }
     .latin {
@@ -91,7 +96,7 @@ in
       background-color: ${crust};
       color: ${text};
       font-size: ${baseFontSize};
-      font-family: "${baseFont}", "sitelen seli kiwen juniko", "Ownglyph Berry RW", serif;
+      font-family: "${baseFont}", "sitelen seli kiwen juniko", "natumemozi", "Ownglyph Berry RW", serif;
     }
 
 
@@ -133,6 +138,14 @@ in
       flex-wrap: wrap;
     }
 
+    .navLink {
+      color: ${accent};
+      text-decoration: none;
+    }
+    .navLink:hover {
+      color: ${subtext1};
+    }
+
     nav ul {
       list-style: none;
       margin: 0;
@@ -143,15 +156,11 @@ in
 
     nav ul li {
       display: none;
+      text-align: center;
     }
 
     nav ul:hover li {
       display: block;
-      text-align: center;
-    }
-
-    nav ul:hover .tpDeco {
-      visibility: hidden;
     }
 
 
@@ -185,6 +194,11 @@ in
     .table {
       text-align: left;
       margin: 10%;
+    }
+
+
+    .hirWord {
+      display: inline-block;
     }
   '';
 

@@ -25,11 +25,11 @@
     "sitelen-pona-UCSUR": {
       "locked": {
         "dir": "sitelen-pona-UCSUR",
-        "lastModified": 1741579135,
-        "narHash": "sha256-rGg7Ey2jqMPCLASVMqaaOSi62ka0Goj1pGF1CblJC+g=",
+        "lastModified": 1742531826,
+        "narHash": "sha256-PRXtDMRFtzWMZA4JHZFcHSPYrRfEtmqCnLKcth2C+Pk=",
         "owner": "K1aymore",
         "repo": "nix-utils",
-        "rev": "365e05507a31016572cef166d082f07b89215e2d",
+        "rev": "cd3ab3e86f847c4a4390f8a4db4574729e3e1efe",
         "type": "github"
       },
       "original": {

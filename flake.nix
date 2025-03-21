@@ -73,11 +73,19 @@
           [ "</br>" "<span class=\"asuki\">kala2</span>" ]
           (markdownConvert f.tp or f.en);
       };
-
-      tp-hg = f: f // {
-        lang = "tp-hg";
-        content = markdownConvert f.tp-hg or f.en;
+      
+      tp-jp = f: f // {
+        lang = "tp-jp";
+        content = builtins.replaceStrings
+          [ "\n"    ]
+          [ "</br>" ]
+          (markdownConvert (sitelen-pona-UCSUR.ucsur2hiragana f.tp));
       };
+
+      # tp-hg = f: f // {
+      #   lang = "tp-hg";
+      #   content = markdownConvert (sitelen-pona-UCSUR.ucsur2hangeul f.tp-hg or f.en);
+      # };
     };
 
     markdownConvert = s: builtins.replaceStrings
@@ -95,7 +103,8 @@
       sv = loadDir ./src "sv";
       tp = loadDir ./src "tp";
       tp-sp = loadDir ./src "tp-sp";
-      tp-hg = loadDir ./src "tp-hg";
+      tp-jp = loadDir ./src "tp-jp";
+      #tp-hg = loadDir ./src "tp-hg";
       "favicon.ico" = getInputPath ./globals [ "favicon.ico" ] "binary";
     };
 
