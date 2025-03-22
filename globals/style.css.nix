@@ -80,6 +80,12 @@ in
         local("Ownglyph Berry RW"),
         url('Ownglyph-Berry-RW.ttf') format('truetype');
     }
+    @font-face {
+      font-family: "Tendrilis";
+      src:
+        local("Tendrilis"),
+        url('Tendrilis-Regular.ttf') format('truetype');
+    }
 
 
     .asuki {
@@ -90,6 +96,9 @@ in
     }
     .latin {
       font-family: "${baseFont}" !important;
+    }
+    .tendrilis {
+      font-family: "Tendrilis" !important;
     }
 
     body {

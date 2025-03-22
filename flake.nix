@@ -9,7 +9,7 @@
     };
   };
 
-  outputs = { nixpkgs, sitelen-pona-UCSUR, ... }: let
+  outputs = { nixpkgs, sitelen-pona-UCSUR, ... }@inputs: let
     pkgs = nixpkgs.legacyPackages.x86_64-linux;
     lib = nixpkgs.lib;
 
@@ -30,56 +30,52 @@
     getDirPath = path: getPath (lib.dropEnd 1 path);
 
 
-    langs = [ "en" "sv" "tp" "tp-sp" ];
+    langs = [ "en" "sv" "tp" "tp-sp" "tp-jp" ];
 
 
-
-    getInputPath = dir: path: lang:
+    # dir is starting path to load from, path is output path
+    getInputPath = { dir, path, lang ? "", tendrilis ? false }@fileData:
       if lib.hasSuffix ".nix" (lib.last path)
-      then loadNixFile dir path lang
-      else dir + ("/" + getPath path);
+      then loadNixFile fileData
+      else dir + ("/" + getPath path); # return path to file in nix store
     
 
-    loadNixFile = dir: path: lang: let
+    loadNixFile = { dir, path, lang, tendrilis }: let
       imported = import (dir + ("/" + getPath path)) { inherit templates; };
+      templateFunc = import imported.template;
+      pageDataLangd = ((langConvert.${lang} imported) // {inherit sitelen-pona-UCSUR lang path getPathConverted markdownConvert; });
+      pageDataProcessed = (d: d // { content = markdownConvert {content = d.content; inherit tendrilis;}; inherit tendrilis; }) pageDataLangd;
     in
-      builtins.toFile (getFileNameConverted (lib.last path))
-        (imported.content or (
-          (import imported.template) ((langConvert.${lang} imported) // {inherit sitelen-pona-UCSUR; path = getPathConverted path;})
-        ));
+      (builtins.toFile (getFileNameConverted (lib.last path))
+        (imported.content or (templateFunc pageDataProcessed)));
 
 
 
     langConvert = {
       en = f: f // {
-        lang = "en";
-        content = markdownConvert f.en;
+        content = f.en;
       };
 
       sv = f: f // {
-        lang = "sv";
-        content = markdownConvert f.sv or f.en;
+        content = f.sv;
       };
 
       tp = f: f // {
-        lang = "tp";
-        content = markdownConvert (sitelen-pona-UCSUR.ucsur2lasina f.tp or f.en);
+        content = sitelen-pona-UCSUR.ucsur2lasina f.tp;
       };
 
       tp-sp = f: f // {
-        lang = "tp-sp";
         content = builtins.replaceStrings
           [ "\n"    "󱤔"  ]
           [ "</br>" "<span class=\"asuki\">kala2</span>" ]
-          (markdownConvert f.tp or f.en);
+          f.tp;
       };
       
       tp-jp = f: f // {
-        lang = "tp-jp";
         content = builtins.replaceStrings
           [ "\n"    ]
           [ "</br>" ]
-          (markdownConvert (sitelen-pona-UCSUR.ucsur2hiragana f.tp));
+          (sitelen-pona-UCSUR.ucsur2hiragana f.tp);
       };
 
       # tp-hg = f: f // {
@@ -88,28 +84,33 @@
       # };
     };
 
-    markdownConvert = s: builtins.replaceStrings
-      [ "'" "\n\n" "\n\t\t\n" "↗️" "↘️" "⬆️" "⬇️" "▶️" "◀️" ]
-      [ "’" "</p><p>" "</p><p>" "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" ]
-      s;
+    markdownConvert = { content, tendrilis ? false }: builtins.replaceStrings
+      ([ "'" "\n\n" "\n\t\t\n" "↗️" "↘️" "⬆️" "⬇️" "▶️" "◀️" ] ++ lib.optionals tendrilis [ " " ])
+      ([ "’" "</p><p>" "</p><p>" "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" ] ++ lib.optionals tendrilis [ "/" ])
+      content;
 
 
   in rec {
 
     # value of attrs is path to file in store
     site = {
-      parts = loadDir ./globals "binary";
-      en = loadDir ./src "en";
-      sv = loadDir ./src "sv";
-      tp = loadDir ./src "tp";
-      tp-sp = loadDir ./src "tp-sp";
-      tp-jp = loadDir ./src "tp-jp";
-      #tp-hg = loadDir ./src "tp-hg";
-      "favicon.ico" = getInputPath ./globals [ "favicon.ico" ] "binary";
+      parts = loadDir {dir = ./globals;};
+
+      en = loadDir { lang = "en"; };
+      sv = loadDir { lang = "sv"; };
+      tp = loadDir { lang = "tp"; };
+      tp-sp = loadDir { lang = "tp-sp"; };
+      tp-jp = loadDir { lang = "tp-jp"; };
+
+      te.en = loadDir { lang = "en"; tendrilis = true; };
+      te.sv = loadDir { lang = "sv"; tendrilis = true; };
+      te.tp = loadDir { lang = "tp"; tendrilis = true; };
+
+      "favicon.ico" = getInputPath { dir = ./globals; path = [ "favicon.ico" ]; };
     };
 
-
-    loadDir = dir: lang: lib.mapAttrsRecursive (path: val: getInputPath dir path lang) (getDir dir);
+    # path is list of folders ending with file name
+    loadDir = { dir ? ./src, lang ? "", tendrilis ? false }: lib.mapAttrsRecursive (path: val: getInputPath {inherit dir path lang tendrilis;}) (getDir dir);
 
 
     # Recursively constructs an attrset of a given folder, recursing on directories, value of attrs is the filetype

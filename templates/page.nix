@@ -1,6 +1,10 @@
-{ content, lang, title, ... }@inputs:
+{ content, lang, title, tendrilis, ... }@inputs:
 
-
+let 
+  contentClass = "content" +
+    (if (lang == "tp-sp" || lang == "tp-jp") then " sitelen-pona" else "") +
+    (if tendrilis then " tendrilis" else "");
+in
 ''
 ${import ./parts/head.nix inputs}
 
@@ -10,7 +14,7 @@ ${import ./parts/head.nix inputs}
 ${import ./parts/navbar.nix inputs}
 
 <div id="centerMargin">
-  <div class="content${if (lang == "tp-sp" || lang == "tp-jp") then " sitelen-pona" else ""}">
+  <div class="${contentClass}">
     <h3>
       ${title}
     </h3>
