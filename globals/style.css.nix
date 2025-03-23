@@ -91,7 +91,7 @@ in
     .asuki {
       font-family: "sitelen seli kiwen asuki";
     }
-    .sitelen-pona {
+    .linebreaker {
       text-indent: ${baseFontSize} hanging each-line;
     }
     .latin {
@@ -139,10 +139,12 @@ in
       width: 97%;
       max-width: 50rem;
       margin: auto;
+      text-align: center;
+      justify-content: space-around;
     }
 
     .navbarSection {
-      justify-content: space-evenly;
+      justify-content: space-around;
       display: flex;
       flex-wrap: wrap;
     }
@@ -168,7 +170,13 @@ in
       text-align: center;
     }
 
-    nav ul:hover li {
+    nav ul input[type="checkbox"] {
+      position: absolute;
+      left: 0;
+      opacity: 0.01;
+    }
+
+    nav ul input[type="checkbox"]:checked ~ li {
       display: block;
     }
 
