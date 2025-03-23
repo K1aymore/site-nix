@@ -1,8 +1,7 @@
-{ title, lang, path, getPathConverted, markdownConvert, sitelen-pona-UCSUR, tendrilis, ... }@inputs:
+{ title, lang, path, langURL, getPathConverted, markdownConvert, sitelen-pona-UCSUR, tendrilis, ... }@inputs:
 
 let
   dir = builtins.replaceStrings [ "index.html" ] [ "" ] (getPathConverted path);
-  sitelen = lang == "tp-sp";
   langPick = input: if lang == "tp"
     then sitelen-pona-UCSUR.ucsur2lasina input.tp-sp
     else if lang == "tp-jp"
@@ -12,7 +11,7 @@ let
   te = if tendrilis then "te/" else "";
 
   mkNavLink = { en, url ? en, ... }@langTitles:
-  ''<a class="navLink${tendClass}" href="/${te}${lang}/${url}">
+  ''<a class="navLink${tendClass}" href="/${te}${langURL}/${url}">
       ${markdownConvert {inherit tendrilis; content = langPick langTitles;}}
     </a>'';
   
@@ -21,13 +20,13 @@ let
   '';
 
   tendrilisLink =
-    if tendrilis then ''<a class="navLink" href="/${lang}/${dir}">disable tendrilis</a>''
-    else ''<a class="navLink tendrilis" href="/te/${lang}/${dir}">tendrilis</a>'';
+    if tendrilis then ''<a class="navLink" href="/${langURL}/${dir}">disable tendrilis</a>''
+    else ''<a class="navLink tendrilis" href="/te/${langURL}/${dir}">tendrilis</a>'';
 in
 ''
 <nav id="navbar">
   <div class="navbarSection">
-    <a class="navLink" href="/${lang}">klaymore.me</a>
+    <a class="navLink" href="/${te}${langURL}">klaymore.me</a>
     ${tendrilisLink}
   </div>
   <div class="navbarSection">

@@ -36,16 +36,16 @@
 
 
     # dir is starting path to load from, path is output path
-    getInputPath = { dir, path, lang ? "", tendrilis ? false }@fileData:
+    getInputPath = { dir, path, lang ? "", tendrilis ? false, langURL ? lang }@fileData:
       if lib.hasSuffix ".nix" (lib.last path)
       then loadNixFile fileData
       else dir + ("/" + getPath path); # return path to file in nix store
     
 
-    loadNixFile = { dir, path, lang, tendrilis }: let
+    loadNixFile = { dir, path, lang, langURL, tendrilis }: let
       pageData = import (dir + ("/" + getPath path)) { inherit templates; };
       templateFunc = import pageData.template;
-      pageDataLangd = langConvert.${lang} (pageData // {inherit lang path getPathConverted markdownConvert sitelen-pona-UCSUR tendrilis;});
+      pageDataLangd = langConvert.${lang} (pageData // {inherit lang path langURL getPathConverted markdownConvert sitelen-pona-UCSUR tendrilis;});
     in
       (builtins.toFile (getFileNameConverted (lib.last path))
         (pageData.content or (templateFunc pageDataLangd)));
@@ -112,14 +112,14 @@
       te.en = loadDir { lang = "en"; tendrilis = true; };
       te.sv = loadDir { lang = "sv"; tendrilis = true; };
       te.tp = loadDir { lang = "tp"; tendrilis = true; };
-      te.tp-sp = loadDir { lang = "tp"; tendrilis = true; };
-      te.tp-jp = loadDir { lang = "tp"; tendrilis = true; };
+      te.tp-sp = loadDir { lang = "tp"; tendrilis = true; langURL = "tp-sp"; };
+      te.tp-jp = loadDir { lang = "tp"; tendrilis = true; langURL = "tp-jp"; };
 
       "favicon.ico" = getInputPath { dir = ./globals; path = [ "favicon.ico" ]; };
     };
 
     # path is list of folders ending with file name
-    loadDir = { dir ? ./src, lang ? "", tendrilis ? false }: lib.mapAttrsRecursive (path: val: getInputPath {inherit dir path lang tendrilis;}) (getDir dir);
+    loadDir = { dir ? ./src, lang ? "", tendrilis ? false, langURL ? lang }: lib.mapAttrsRecursive (path: val: getInputPath {inherit dir path lang langURL tendrilis;}) (getDir dir);
 
     # Recursively constructs an attrset of a given folder, recursing on directories, value of attrs is the filetype
     getDir = dir: lib.mapAttrs
