@@ -68,18 +68,7 @@ in
         local("sitelen seli kiwen mono juniko"),
         url('sitelen-seli-kiwen-mono-juniko.ttf') format('truetype');
     }
-    @font-face {
-      font-family: "natumemozi";
-      src:
-        local("natumemozi"),
-        url('natumemozi.ttf') format('truetype');
-    }
-    @font-face {
-      font-family: "Ownglyph Berry RW";
-      src:
-        local("Ownglyph Berry RW"),
-        url('Ownglyph-Berry-RW.ttf') format('truetype');
-    }
+
     @font-face {
       font-family: "Tendrilis";
       src:
@@ -105,7 +94,7 @@ in
       background-color: ${crust};
       color: ${text};
       font-size: ${baseFontSize};
-      font-family: "${baseFont}", "sitelen seli kiwen juniko", "natumemozi", "Ownglyph Berry RW", serif;
+      font-family: "${baseFont}", "sitelen seli kiwen juniko", sans-serif, serif;
     }
 
 
