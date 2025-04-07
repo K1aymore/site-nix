@@ -27,8 +27,16 @@ in
 <nav id="navbar">
   <div class="navbarSection">
     <a class="navLink" href="/${te}${langURL}">klaymore.me</a>
-    ${tendrilisLink}
   </div>
+  <hr>
+  <div class="navbarSection">
+    ${mkNavLink { en = "home"; sv = "hem"; tp-sp = "󱥡󱥁"; url = ""; }}
+    ${mkNavLink { en = "about"; sv = "om"; tp-sp = "󱥡󱥁"; }}
+    ${mkNavLink { en = "blog"; sv = "blogg"; tp-sp = "󱥠󱥡"; }}
+    ${mkNavLink { en = "comics"; sv = "webbserier"; tp-sp = "󱥠󱤪"; }}
+    <!-- ${mkNavLink { en = "art"; sv = "konstverk"; tp-sp = "󱤪󱤻"; }} -->
+  </div>
+  <hr>
   <div class="navbarSection">
     <a class="navLink" href="/${te}en/${dir}">english</a>
     <a class="navLink" href="/${te}sv/${dir}">svenska</a>
@@ -40,13 +48,7 @@ in
       <li value="いらかな"><a class="navLink" href="/${te}tp-jp/${dir}">いらかな</a></li>
       <li value="안구"><a class="navLink" href="/${te}tp-hg/${dir}">안구</a></li>
     </ul>
-  </div>
-  <div class="navbarSection">
-    ${mkNavLink { en = "home"; sv = "hem"; tp-sp = "󱥡󱥁"; url = ""; }}
-    <!-- ${mkNavLink { en = "about"; sv = "om"; tp-sp = "󱥡󱥁"; }} -->
-    ${mkNavLink { en = "blog"; sv = "blogg"; tp-sp = "󱥠󱥡"; }}
-    ${mkNavLink { en = "comics"; sv = "webbserier"; tp-sp = "󱥠󱤪"; }}
-    <!-- ${mkNavLink { en = "art"; sv = "konstverk"; tp-sp = "󱤪󱤻"; }} -->
+    ${tendrilisLink}
   </div>
 </nav>
 ''

@@ -11,15 +11,14 @@ ${import ./parts/head.nix inputs}
 </head>
 <body>
 
-${import ./parts/navbar.nix inputs}
-
 <div id="centerMargin">
+  ${import ./parts/navbar.nix inputs} 
   <div class="${contentClass}">
     <h3>
-    ${title}
+      ${title}
     </h3>
     <p>
-    ${content}
+      ${content}
     </p>
   </div>
 </div>

@@ -89,6 +89,9 @@ in
     .tendrilis {
       font-family: "Tendrilis" !important;
     }
+    .hirWord {
+      display: inline-block;
+    }
 
     body {
       background-color: ${crust};
@@ -123,11 +126,47 @@ in
 
 
 
-    #navbar {
+    
+
+    hr {
+      display: block;
+      height: 1px;
+      border: 0;
+      border-top: 1px solid ${overlay2};
+      margin: 1rem 0;
+      padding: 0;
+    }
+
+    #centerMargin {
       background: ${base};
-      width: 97%;
-      max-width: 50rem;
+      width: fit-content;
       margin: auto;
+      display: grid;
+      grid-template-columns: auto;
+      grid-auto-columns: min-content;
+      grid-gap: 1rem;
+      padding: 1rem;
+    }
+
+    .content {
+      color: ${text};
+      text-align: left;
+      overflow-wrap: break-word;
+      max-width: 50rem;
+    }
+
+
+    @media (width >= 90rem) {
+      .navbarSection {
+        flex-direction: column;
+      }
+      #centerMargin {
+        grid-template-columns: min-content 50rem;
+      }
+    }
+
+
+    #navbar {
       text-align: center;
       justify-content: space-around;
     }
@@ -171,41 +210,12 @@ in
 
 
 
-
-    hr {
-      display: block;
-      height: 1px;
-      border: 0;
-      border-top: 1px solid ${overlay1};
-      margin: 1rem 0;
-      padding: 0;
-    }
-
-    #centerMargin {
-      background: ${base};
-      width: 97%;
-      max-width: 50rem;
-      margin: auto;
-    }
-
-    .content {
-      text-align: left;
-      color: ${text};
-      padding-top: 1%;
-      padding-left: 4%;
-      padding-right: 4%;
-      padding-bottom: 1%;
-    }
-
     .table {
       text-align: left;
       margin: 10%;
     }
 
 
-    .hirWord {
-      display: inline-block;
-    }
   '';
 
 }
