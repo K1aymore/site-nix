@@ -14,9 +14,9 @@ ${import ./parts/head.nix inputs}
 <div id="centerMargin">
   ${import ./parts/navbar.nix inputs} 
   <div class="${contentClass}">
-    <h3>
+    <h1>
       ${title}
-    </h3>
+    </h1>
     <p>
       ${content}
     </p>

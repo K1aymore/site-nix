@@ -1,22 +1,6 @@
 { ... }:
 
 let
-  text = "#cdd6f4";
-  subtext1 = "#bac2de";
-  subtext0 = "#a6adc8";
-  overlay2 = "#9399b2";
-  overlay1 = "#7f849c";
-  overlay0 = "#6c7086";
-  surface2 = "#585b70";
-  surface1 = "#45475a";
-  surface0 = "#313244";
-  base = "#1e1e2e";
-  mantle = "#181825";
-  crust = "#11111b";
-
-  maroon = "#eba0ac";
-  accent = maroon;
-
   baseFont = "sitelen seli kiwen juniko";
   baseFontSize = "1.65rem";
 in
@@ -50,6 +34,25 @@ in
 
 
   content = ''
+    :root {
+      --text: #cdd6f4;
+      --subtext1: #bac2de;
+      --subtext0: #a6adc8;
+      --overlay2: #9399b2;
+      --overlay1: #7f849c;
+      --overlay0: #6c7086;
+      --surface2: #585b70;
+      --surface1: #45475a;
+      --surface0: #313244;
+      --base: #1e1e2e;
+      --mantle: #181825;
+      --crust: #11111b;
+
+      --maroon: #eba0ac;
+      --accent: var(--maroon);
+    }
+
+
     @font-face {
       font-family: "sitelen seli kiwen asuki";
       src:
@@ -94,8 +97,8 @@ in
     }
 
     body {
-      background-color: ${crust};
-      color: ${text};
+      background-color: var(--crust);
+      color: var(--text);
       font-size: ${baseFontSize};
       font-family: "${baseFont}", "sitelen seli kiwen juniko", sans-serif, serif;
     }
@@ -103,25 +106,25 @@ in
 
 
     a {
-      color: ${accent};
+      color: var(--accent);
       text-decoration: none;
     }
 
     a:hover {
-      color: ${subtext1};
+      color: var(--subtext1);
     }
 
     button {
       background: none;
       border: none;
       font-weight: bold;
-      color: ${text};
+      color: var(--text);
     }
 
     input {
-      background: ${surface0};
+      background: var(--surface0);
       border: none;
-      color: ${text};
+      color: var(--text);
     }
 
 
@@ -132,36 +135,40 @@ in
       display: block;
       height: 1px;
       border: 0;
-      border-top: 1px solid ${overlay2};
+      border-top: 1px solid var(--overlay2);
       margin: 1rem 0;
       padding: 0;
     }
 
     #centerMargin {
-      background: ${base};
+      background: var(--base);
       width: fit-content;
       margin: auto;
       display: grid;
-      grid-template-columns: auto;
+      grid-template-columns: minmax(min-content, 50rem);
       grid-auto-columns: min-content;
       grid-gap: 1rem;
       padding: 1rem;
     }
 
     .content {
-      color: ${text};
+      color: var(--text);
       text-align: left;
       overflow-wrap: break-word;
       max-width: 50rem;
     }
 
 
-    @media (width >= 90rem) {
-      .navbarSection {
+    @media (width >= 80rem) {
+      #navbar {
+        padding-top: 1.5rem;
+      }
+      #navbar .navbarSection {
+        gap: 0rem;
         flex-direction: column;
       }
       #centerMargin {
-        grid-template-columns: min-content 50rem;
+        grid-template-columns: 17rem 50rem;
       }
     }
 
@@ -175,14 +182,15 @@ in
       justify-content: space-around;
       display: flex;
       flex-wrap: wrap;
+      gap: 2rem;
     }
 
     .navLink {
-      color: ${accent};
+      color: var(--accent);
       text-decoration: none;
     }
     .navLink:hover {
-      color: ${subtext1};
+      color: var(--subtext1);
     }
 
     nav ul {
