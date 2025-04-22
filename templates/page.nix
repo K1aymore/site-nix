@@ -7,7 +7,7 @@ let
 in
 ''
 ${import ./parts/head.nix inputs}
-
+<script src="/parts/script.js"></script> 
 </head>
 <body>
 

@@ -31,7 +31,7 @@ in
   <hr>
   <div class="navbarSection">
     ${mkNavLink { en = "home"; sv = "hem"; tp-sp = "󱥡󱥁"; url = ""; }}
-    ${mkNavLink { en = "about"; sv = "om"; tp-sp = "󱥡󱥁"; }}
+    <!-- ${mkNavLink { en = "about"; sv = "om"; tp-sp = "󱥡󱥁"; }} -->
     ${mkNavLink { en = "blog"; sv = "blogg"; tp-sp = "󱥠󱥡"; }}
     ${mkNavLink { en = "comics"; sv = "webbserier"; tp-sp = "󱥠󱤪"; }}
     <!-- ${mkNavLink { en = "art"; sv = "konstverk"; tp-sp = "󱤪󱤻"; }} -->
@@ -46,7 +46,6 @@ in
       <li value="toki pona"><a class="navLink" href="/${te}tp/${dir}">toki pona</a></li>
       <li value="󱥠‍󱥔"><a class="navLink" href="/${te}tp-sp/${dir}">󱥠‍󱥔</a></li>
       <li value="いらかな"><a class="navLink" href="/${te}tp-jp/${dir}">いらかな</a></li>
-      <li value="안구"><a class="navLink" href="/${te}tp-hg/${dir}">안구</a></li>
     </ul>
     ${tendrilisLink}
   </div>

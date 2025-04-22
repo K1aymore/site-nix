@@ -4,20 +4,30 @@
 
   template = templates.page;
 
-  title = "main";
+  title = "Home";
 
   date = "2025-02-07";
 
   en = ''
-    This is my website.
-    
-    The lilac-crowned amazon (Amazona finschi), also known as lilac-crowned parrot, Finsch's parrot or Finsch's amazon, is a parrot endemic to the Pacific slopes of Mexico. Also known as Finsch's amazon, it is characterised by green plumage, a maroon forehead, and a violet-blue crown and neck.
+    <img class="pixelated" src="/parts/profile.png">
 
-    In 2006, BirdLife International classified this species as vulnerable. In 2014, IUCN uplisted this species to Endangered.[1]
+    Welcome to my website!
 
-    The species name of this bird, finschi, commemorates the German naturalist and explorer Otto Finsch.
+    My website has gone through a couple iterations every time I come back to it. This version is built using a little static site generator (written in Nix) I've been working on <a href="https://github.com/K1aymore/site-nix">here</a>. I have nothing to put on this site and probably never will but it's cool to have one.
 
-    == >= =>
+    I like
+    <ul id="interestsList">
+      ▶️NixOS◀️
+      ▶️Arcane◀️
+      ▶️logging everything◀️
+      ▶️languages apparently◀️
+      ▶️NixOS◀️
+      ▶️Catppuccin◀️
+    </ul>
+    <button onclick="sortList()"> 
+      Shuffle List
+    </button> 
+
   '';
 
   sv = ''

@@ -115,7 +115,7 @@ in
     }
 
     button {
-      background: none;
+      background-color: var(--surface1);
       border: none;
       font-weight: bold;
       color: var(--text);
@@ -127,6 +127,11 @@ in
       color: var(--text);
     }
 
+    .pixelated {
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+    }
 
 
     

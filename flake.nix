@@ -86,7 +86,7 @@
 
 
     markdownConvert = { content, tendrilis ? false }: builtins.replaceStrings
-      [ "'"     "\n\n" "\n    \n" "↗️" "↘️" "⬆️" "⬇️" "▶️" "◀️" ]
+      [ "'"     "\n\n"        "\n    \n"    "↗️" "↘️" "⬆️" "⬇️" "▶️" "◀️" ]
       [ "&#39;" "\n</p><p>\n" "\n</p><p>\n" "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" ]
       (if tendrilis then tendrilisConvert content else content);
 
