@@ -20,9 +20,15 @@
     };
 
 
-    langs = [ "en" "en-te" "sv" "sv-te" "tp" "tp-te" "tp-sp" "tp-jp" ];
+    langs = [ "en" "en" "sv" "sv" "tp" "tp" "tp" "tp" ];
+    writs = [ "" "-te" "-sp" "-jp" ];
 
-    getDirName = n: builtins.concatStringsSep "/" (lib.dropEnd 1 (lib.flatten (builtins.split "/" (builtins.toString n))));
+    getDirName = n: let 
+      path = builtins.concatStringsSep "/" (lib.dropEnd 1 (lib.flatten (builtins.split "/" (builtins.toString n))));
+    in 
+      if path == ""
+      then "/"
+      else "/" + path;
     getPathConverted = n: (builtins.replaceStrings
       [ ".css.nix" ".nix"  ]
       [ ".css"     ".html" ]
@@ -33,18 +39,18 @@
     );
 
 
-
-
-    getInputPath = { path, lang ? "en", tendrilis ? false, langURL ? lang }@fileData:
-      if lib.hasSuffix ".nix" (builtins.toString path)
-      then loadNixFile fileData
-      else path; # return path to file in nix store
+    loadLang = { f, lang, writ ? "" }: if (builtins.hasAttr (lang+writ) langConvert)
+      then {
+        name = builtins.substring 55 999 ((getDirName f) + "/" + lang + writ + "/" + (getFileNameConverted f));
+        value = loadNixFile { path = f; inherit lang writ; };
+      }
+      else [];
     
 
-    loadNixFile = { path, lang ? "en", tendrilis ? false }: let
+    loadNixFile = { path, lang ? "en", writ ? "" }: let
       pageData = import path { inherit templates; };
       templateFunc = import pageData.template;
-      pageDataLangd = langConvert.${lang} (pageData // {inherit path getFileNameConverted markdownConvert sitelen-pona-UCSUR tendrilis;});
+      pageDataLangd = langConvert.${lang + writ} (pageData // {inherit path getDirName getFileNameConverted langConvert markdownConvert sitelen-pona-UCSUR lang writ;});
     in
       (builtins.toFile (getFileNameConverted path)
         (pageData.content or (templateFunc pageDataLangd)));
@@ -58,45 +64,41 @@
         content = markdownConvert { content = f.en; };
       };
       en-te = f: f // {
-        content = markdownConvert { content = f.en; tendrilis = true; };
+        content = markdownConvert { content = f.en; writ = f.writ; };
       };
 
       sv = f: f // {
         content = markdownConvert { content = f.sv; };
       };
       sv-te = f: f // {
-        content = markdownConvert { content = f.sv; tendrilis = true; };
+        content = markdownConvert { content = f.sv; writ = f.writ; };
       };
 
       tp = f: f // {
         content = markdownConvert { content = (sitelen-pona-UCSUR.ucsur2lasina f.tp); };
       };
       tp-te = f: f // {
-        content = markdownConvert { content = (sitelen-pona-UCSUR.ucsur2lasina f.tp); tendrilis = true; };
+        content = markdownConvert { content = (sitelen-pona-UCSUR.ucsur2lasina f.tp); writ = f.writ; };
       };
       tp-sp = f: f // {
         content = builtins.replaceStrings
           [ "󱦜\n"    "󱤔"  ]
           [ "</br>" "<span class=\"asuki\">kala2</span>" ]
-          (markdownConvert { content = f.tp; });
+          (markdownConvert { content = f.tp; writ = f.writ; });
       };
       tp-jp = f: f // {
         content = builtins.replaceStrings
-          [ "󱦜\n"    ]
+          [ ".\n"    ]
           [ "</br>" ]
-          (markdownConvert { content = (sitelen-pona-UCSUR.ucsur2hiragana f.tp); });
-      };
-
-      content = f: f // {
-        content = f.content or "";
+          (markdownConvert { content = (sitelen-pona-UCSUR.ucsur2hiragana f.tp); writ = f.writ; });
       };
     };
 
 
-    markdownConvert = { content, tendrilis ? false }: builtins.replaceStrings
+    markdownConvert = { content, writ ? "" }: builtins.replaceStrings
       [ "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" "'"     "\n\n"        "\n    \n"    ]
       [ "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" "&#39;" "\n</p><p>\n" "\n</p><p>\n" ]
-      (if tendrilis then tendrilisConvert content else content);
+      (if writ == "-te" then tendrilisConvert content else content);
 
     tendrilisConvert = content: builtins.replaceStrings
       [ "    " "  " " [" "] " "[" "]" ", " ". "    " " ]
@@ -108,28 +110,22 @@
   in rec {
 
 
-    # attrset, each value is string of output path
+    # attrset, each name is string of output path, value of path in store
     site = builtins.listToAttrs siteList;
 
-    # has a bazillion duplicates of all binary files
+
     siteList = lib.flatten (lib.forEach filesList (f: 
-      lib.forEach langs (lang:
-        if lib.hasSuffix ".nix" f then
-          if builtins.hasAttr lang (import f { inherit templates; })
-          then {
-            name = builtins.substring 55 999 ((getDirName f) + "/" + lang + "/" + (getFileNameConverted f));
-            value = getInputPath { path = f; inherit lang; };
-          }
-          else if builtins.hasAttr "content" (import f { inherit templates; })
-            then {
-              name = builtins.substring 54 999 ((getDirName f) + "/" +  (getFileNameConverted f));
-              value = getInputPath { path = f; lang = "content"; };
-            }
-            else []
-        else {
-          name = getPathConverted (builtins.substring 55 999 (builtins.toString f));
-          value = getInputPath { path = f; lang = "content"; }; }
-      )));
+      if lib.hasSuffix ".nix" f
+      then if builtins.hasAttr "content" (import f { inherit templates; })
+        then {
+          name = builtins.substring 55 999 ((getDirName f) + "/" +  (getFileNameConverted f));
+          value = loadNixFile { path = f; lang = "content"; };
+        }
+        else lib.forEach langs (lang: lib.forEach writs (writ: loadLang { inherit f lang writ; }))
+      else {
+        name = getPathConverted (builtins.substring 55 999 (builtins.toString f));
+        value = f; }
+      ));
 
     # list of input files
     filesList = lib.filesystem.listFilesRecursive ./src;

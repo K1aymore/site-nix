@@ -76,7 +76,7 @@ in
       font-family: "Tendrilis";
       src:
         local("Tendrilis"),
-        url('Tendrilis-Regular.ttf') format('truetype');
+        url('Tendrilis-Regular.otf') format('opentype');
     }
 
 
@@ -115,10 +115,11 @@ in
     }
 
     button {
+      color: var(--text);
       background-color: var(--surface1);
       border: none;
+      font-family: inherit;
       font-weight: bold;
-      color: var(--text);
     }
 
     input {

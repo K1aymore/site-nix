@@ -1,9 +1,9 @@
-{ content, lang ? "en", title, tendrilis, ... }@inputs:
+{ content, lang ? "en", writ ? "", title, ... }@inputs:
 
 let 
   contentClass = "content" +
-    (if (lang == "tp-sp" || lang == "tp-jp" || tendrilis) then " linebreaker" else "") +
-    (if tendrilis then " tendrilis" else "");
+    (if (writ == "-sp" || writ == "-jp" || writ == "-te") then " linebreaker" else "") +
+    (if writ == "-te" then " tendrilis" else "");
 in
 ''
 ${import ./parts/head.nix inputs}
