@@ -1,32 +1,24 @@
-{ title, lang, path, langURL, getPathConverted, markdownConvert, sitelen-pona-UCSUR, tendrilis, ... }@inputs:
+{ title, lang ? "en", path, getFileNameConverted, markdownConvert, sitelen-pona-UCSUR, tendrilis, ... }@inputs:
 
 let
-  dir = builtins.replaceStrings [ "index.html" ] [ "" ] (getPathConverted path);
+  dir = builtins.replaceStrings [ "index.html" ] [ "" ] (getFileNameConverted path);
   langPick = input: if lang == "tp"
     then sitelen-pona-UCSUR.ucsur2lasina input.tp-sp
     else if lang == "tp-jp"
     then sitelen-pona-UCSUR.ucsur2hiragana input.tp-sp
     else input.${lang};
-  tendClass = if tendrilis then " tendrilis" else "";
-  te = if tendrilis then "te/" else "";
 
   mkNavLink = { en, url ? en, ... }@langTitles:
-  ''<a class="navLink${tendClass}" href="/${te}${langURL}/${url}">
+  ''<a class="navLink" href="/${url}">
       ${markdownConvert {inherit tendrilis; content = langPick langTitles;}}
     </a>'';
   
-  mkLangLink = { lang, name }:
-  ''
-  '';
 
-  tendrilisLink =
-    if tendrilis then ''<a class="navLink" href="/${langURL}/${dir}">disable tendrilis</a>''
-    else ''<a class="navLink tendrilis" href="/te/${langURL}/${dir}">tendrilis</a>'';
 in
 ''
 <nav id="navbar">
   <div class="navbarSection">
-    <a class="navLink" href="/${te}${langURL}">klaymore.me</a>
+    <a class="navLink" href="/">klaymore.me</a>
   </div>
   <hr>
   <div class="navbarSection">
@@ -38,16 +30,18 @@ in
   </div>
   <hr>
   <div class="navbarSection">
-    <a class="navLink" href="/${te}en/${dir}">english</a>
-    <a class="navLink" href="/${te}sv/${dir}">svenska</a>
     <ul>
-      <input type="checkbox" id="tp-dropdown" />
-      <label for="tp-dropdown" class="navLink">󱥬‍󱥔toki pona</label>
-      <li value="toki pona"><a class="navLink" href="/${te}tp/${dir}">toki pona</a></li>
-      <li value="󱥠‍󱥔"><a class="navLink" href="/${te}tp-sp/${dir}">󱥠‍󱥔</a></li>
-      <li value="いらかな"><a class="navLink" href="/${te}tp-jp/${dir}">いらかな</a></li>
+      <li value="english"><a class="navLink tendrilis" href="/en/${dir}">english</a></li>
+      <li value="english tendrilis"><a class="navLink tendrilis" href="/en-te/${dir}">en</a></li>
+    </ul><ul>
+      <li value="svenska"><a class="navLink" href="/sv/${dir}">svenska</a></li>
+      <li value="svenska tendrilis"><a class="navLink tendrilis" href="/sv-te/${dir}">sv</a></li>
+    </ul><ul>
+      <li value="toki pona"><a class="navLink" href="/tp/${dir}">toki pona</a></li>
+      <li value="󱥠‍󱥔"><a class="navLink" href="/tp-sp/${dir}">󱥠‍󱥔</a></li>
+      <li value="いらかな"><a class="navLink" href="/tp-jp/${dir}">いらかな</a></li>
+      <li value="toki pona tendrilis"><a class="navLink tendrilis" href="/tp-te/${dir}">tp</a></li>
     </ul>
-    ${tendrilisLink}
   </div>
 </nav>
 ''

@@ -1,4 +1,4 @@
-{ title, lang, ... }@inputs:
+{ ... }@inputs:
 
 # <title>${title}</title>
 ''

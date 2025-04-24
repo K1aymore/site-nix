@@ -164,19 +164,6 @@ in
     }
 
 
-    @media (width >= 80rem) {
-      #navbar {
-        padding-top: 1.5rem;
-      }
-      #navbar .navbarSection {
-        gap: 0rem;
-        flex-direction: column;
-      }
-      #centerMargin {
-        grid-template-columns: 17rem 50rem;
-      }
-    }
-
 
     #navbar {
       text-align: center;
@@ -207,18 +194,8 @@ in
     }
 
     nav ul li {
-      display: none;
-      text-align: center;
-    }
-
-    nav ul input[type="checkbox"] {
-      position: absolute;
-      left: 0;
-      opacity: 0.01;
-    }
-
-    nav ul input[type="checkbox"]:checked ~ li {
       display: block;
+      text-align: center;
     }
 
 
@@ -228,6 +205,20 @@ in
       margin: 10%;
     }
 
+
+
+    @media (width >= 80rem) {
+      #navbar {
+        padding-top: 1.5rem;
+      }
+      #navbar .navbarSection {
+        gap: 0rem;
+        flex-direction: column;
+      }
+      #centerMargin {
+        grid-template-columns: 17rem 50rem;
+      }
+    }
 
   '';
 

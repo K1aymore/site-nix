@@ -8,8 +8,8 @@
 
   date = "2025-02-07";
 
-  en = ''
-    <img class="pixelated" src="/parts/profile.png">
+  en =
+  ''<img class="pixelated" src="/parts/profile.png">
 
     Welcome to my website!
 
@@ -17,21 +17,20 @@
 
     I like
     <ul id="interestsList">
-      ▶️NixOS◀️
-      ▶️Arcane◀️
-      ▶️logging everything◀️
-      ▶️languages apparently◀️
-      ▶️NixOS◀️
-      ▶️Catppuccin◀️
+      <li>NixOS</li>
+      <li>Arcane</li>
+      <li>logging everything</li>
+      <li>languages apparently</li>
+      <li>NixOS</li>
+      <li>Catppuccin</li>
     </ul>
     <button onclick="sortList()"> 
       Shuffle List
-    </button> 
-
+    </button>
   '';
 
-  sv = ''
-    Det här är min webbsida waow
+  sv =
+  ''Det här är min webbsida waow
 
     Violettkronad amazon[2] (Amazona finschi) är en starkt utrotningshotad papegojfågel som är endemisk för Mexiko.[3]
 
@@ -50,5 +49,5 @@
     󱥆󱤧󱤿󱥚󱤧󱤠󱤉󱥬󱥍󱤱󱥡󱥆
 
     󱤔'';
-
+  
 }

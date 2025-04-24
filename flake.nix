@@ -1,13 +1,13 @@
 {
 
   inputs = {
-
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     sitelen-pona-UCSUR = {
       url = "github:K1aymore/nix-utils?dir=sitelen-pona-UCSUR";
     };
   };
+
 
   outputs = { nixpkgs, sitelen-pona-UCSUR, ... }@inputs: let
     pkgs = nixpkgs.legacyPackages.x86_64-linux;
@@ -20,62 +20,71 @@
     };
 
 
+    langs = [ "en" "en-te" "sv" "sv-te" "tp" "tp-te" "tp-sp" "tp-jp" ];
 
-    getFileNameConverted = n: builtins.replaceStrings
+    getDirName = n: builtins.concatStringsSep "/" (lib.dropEnd 1 (lib.flatten (builtins.split "/" (builtins.toString n))));
+    getPathConverted = n: (builtins.replaceStrings
       [ ".css.nix" ".nix"  ]
       [ ".css"     ".html" ]
-      n;
-    getPath = path: builtins.concatStringsSep "/" path;
-    getPathConverted = path: getFileNameConverted (getPath path);
-    getDirPath = path: getPath (lib.dropEnd 1 path);
-
-
-    langs = [ "en" "sv" "tp" "tp-sp" "tp-jp" ];
-    tendrilisLangs = [ "en" "sv" "tp" ];
+      n
+    );
+    getFileNameConverted = n: (getPathConverted
+      (lib.last (builtins.split "/" (builtins.toString n)))
+    );
 
 
 
-    # dir is starting path to load from, path is output path
-    getInputPath = { dir, path, lang ? "", tendrilis ? false, langURL ? lang }@fileData:
-      if lib.hasSuffix ".nix" (lib.last path)
+
+    getInputPath = { path, lang ? "en", tendrilis ? false, langURL ? lang }@fileData:
+      if lib.hasSuffix ".nix" (builtins.toString path)
       then loadNixFile fileData
-      else dir + ("/" + getPath path); # return path to file in nix store
+      else path; # return path to file in nix store
     
 
-    loadNixFile = { dir, path, lang, langURL, tendrilis }: let
-      pageData = import (dir + ("/" + getPath path)) { inherit templates; };
+    loadNixFile = { path, lang ? "en", tendrilis ? false }: let
+      pageData = import path { inherit templates; };
       templateFunc = import pageData.template;
-      pageDataLangd = langConvert.${lang} (pageData // {inherit lang path langURL getPathConverted markdownConvert sitelen-pona-UCSUR tendrilis;});
+      pageDataLangd = langConvert.${lang} (pageData // {inherit path getFileNameConverted markdownConvert sitelen-pona-UCSUR tendrilis;});
     in
-      (builtins.toFile (getFileNameConverted (lib.last path))
+      (builtins.toFile (getFileNameConverted path)
         (pageData.content or (templateFunc pageDataLangd)));
+
+
+
 
 
     langConvert = {
       en = f: f // {
-        content = (markdownConvert { tendrilis = f.tendrilis; content = f.en;});
+        content = markdownConvert { content = f.en; };
+      };
+      en-te = f: f // {
+        content = markdownConvert { content = f.en; tendrilis = true; };
       };
 
       sv = f: f // {
-        content = (markdownConvert { tendrilis = f.tendrilis; content = f.sv;});
+        content = markdownConvert { content = f.sv; };
+      };
+      sv-te = f: f // {
+        content = markdownConvert { content = f.sv; tendrilis = true; };
       };
 
       tp = f: f // {
-        content = (markdownConvert { tendrilis = f.tendrilis; content = (sitelen-pona-UCSUR.ucsur2lasina f.tp);});
+        content = markdownConvert { content = (sitelen-pona-UCSUR.ucsur2lasina f.tp); };
       };
-
       tp-sp = f: f // {
         content = builtins.replaceStrings
           [ "\n"    "󱤔"  ]
           [ "</br>" "<span class=\"asuki\">kala2</span>" ]
-          (markdownConvert {tendrilis = f.tendrilis; content = f.tp;});
+          (markdownConvert { content = f.tp; });
       };
-      
       tp-jp = f: f // {
         content = builtins.replaceStrings
           [ "\n"    ]
           [ "</br>" ]
-          (markdownConvert {tendrilis = f.tendrilis; content = (sitelen-pona-UCSUR.ucsur2hiragana f.tp);});
+          (markdownConvert { content = (sitelen-pona-UCSUR.ucsur2hiragana f.tp); });
+      };
+      tp-te = f: f // {
+        content = markdownConvert { content = (sitelen-pona-UCSUR.ucsur2lasina f.tp); };
       };
 
       # tp-hg = f: f // {
@@ -86,8 +95,8 @@
 
 
     markdownConvert = { content, tendrilis ? false }: builtins.replaceStrings
-      [ "'"     "\n\n"        "\n    \n"    "↗️" "↘️" "⬆️" "⬇️" "▶️" "◀️" ]
-      [ "&#39;" "\n</p><p>\n" "\n</p><p>\n" "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" ]
+      [ "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" "'"     "\n\n"        "\n    \n"    ]
+      [ "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" "&#39;" "\n</p><p>\n" "\n</p><p>\n" ]
       (if tendrilis then tendrilisConvert content else content);
 
     tendrilisConvert = content: builtins.replaceStrings
@@ -99,40 +108,29 @@
 
   in rec {
 
-    # value of attrs is path to file in store
-    site = {
-      parts = loadDir { dir = ./globals; };
 
-      en = loadDir { lang = "en"; };
-      sv = loadDir { lang = "sv"; };
-      tp = loadDir { lang = "tp"; };
-      tp-sp = loadDir { lang = "tp-sp"; };
-      tp-jp = loadDir { lang = "tp-jp"; };
+    # list of output files for pages
+    siteList = lib.forEach filesList (f: {
+      path = getPathConverted (builtins.substring 55 999 (builtins.toString f)); # output path of file
+      source = getInputPath { path = f; }; # input path in Nix store
+    });
 
-      te.en = loadDir { lang = "en"; tendrilis = true; };
-      te.sv = loadDir { lang = "sv"; tendrilis = true; };
-      te.tp = loadDir { lang = "tp"; tendrilis = true; };
-      te.tp-sp = loadDir { lang = "tp"; tendrilis = true; langURL = "tp-sp"; };
-      te.tp-jp = loadDir { lang = "tp"; tendrilis = true; langURL = "tp-jp"; };
-
-      "favicon.ico" = getInputPath { dir = ./globals; path = [ "favicon.ico" ]; };
-    };
-
-    # path is list of folders ending with file name
-    loadDir = { dir ? ./src, lang ? "", tendrilis ? false, langURL ? lang }: lib.mapAttrsRecursive (path: val: getInputPath {inherit dir path lang langURL tendrilis;}) (getDir dir);
-
-    # Recursively constructs an attrset of a given folder, recursing on directories, value of attrs is the filetype
-    getDir = dir: lib.mapAttrs
-      (file: type: if type == "directory" then getDir "${dir}/${file}" else type)
-      (builtins.readDir dir);
+    # list of input files
+    filesList = lib.filesystem.listFilesRecursive ./src;
 
 
+    # build an attrset from siteList to easily check if a page exists
+
+    # linkTo = { path, lang, writ, ... }: let
+    #   link = if lib.hasAttr path siteList then (lib.concatStrings path + "")
+    #     else (linkTo { inherit path; lang = "en"; writ = ""; });
+    #   linkFinal = builtins.replaceStrings ["."] ["/"] link;
+    # in ''<a href=${linkFinal}>text</a>'';
 
 
-    linkCommands = lib.collect lib.isString
-      (lib.mapAttrsRecursive (path: value:
-        ''mkdir -p $out/${getDirPath path} && ln -s ${value} $out/${getPathConverted path}'')
-        site);
+    linkCommands = (lib.forEach siteList ({ path, source }:
+      ''mkdir -p $out/${getDirName path} && ln -s ${source} $out/${path}'')
+    );
 
 
     packages.x86_64-linux.default = pkgs.stdenv.mkDerivation {

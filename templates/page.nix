@@ -1,4 +1,4 @@
-{ content, lang, title, tendrilis, ... }@inputs:
+{ content, lang ? "en", title, tendrilis, ... }@inputs:
 
 let 
   contentClass = "content" +
