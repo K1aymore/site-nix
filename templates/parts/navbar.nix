@@ -31,7 +31,7 @@ in
   <hr>
   <div class="navbarSection">
     <ul>
-      <li value="english"><a class="navLink tendrilis" href="/en/${dir}">english</a></li>
+      <li value="english"><a class="navLink" href="/en/${dir}">english</a></li>
       <li value="english tendrilis"><a class="navLink tendrilis" href="/en-te/${dir}">en</a></li>
     </ul><ul>
       <li value="svenska"><a class="navLink" href="/sv/${dir}">svenska</a></li>

@@ -71,26 +71,25 @@
       tp = f: f // {
         content = markdownConvert { content = (sitelen-pona-UCSUR.ucsur2lasina f.tp); };
       };
+      tp-te = f: f // {
+        content = markdownConvert { content = (sitelen-pona-UCSUR.ucsur2lasina f.tp); tendrilis = true; };
+      };
       tp-sp = f: f // {
         content = builtins.replaceStrings
-          [ "\n"    "󱤔"  ]
+          [ "󱦜\n"    "󱤔"  ]
           [ "</br>" "<span class=\"asuki\">kala2</span>" ]
           (markdownConvert { content = f.tp; });
       };
       tp-jp = f: f // {
         content = builtins.replaceStrings
-          [ "\n"    ]
+          [ "󱦜\n"    ]
           [ "</br>" ]
           (markdownConvert { content = (sitelen-pona-UCSUR.ucsur2hiragana f.tp); });
       };
-      tp-te = f: f // {
-        content = markdownConvert { content = (sitelen-pona-UCSUR.ucsur2lasina f.tp); };
-      };
 
-      # tp-hg = f: f // {
-      #   lang = "tp-hg";
-      #   content = markdownConvert (sitelen-pona-UCSUR.ucsur2hangeul f.tp-hg or f.en);
-      # };
+      content = f: f // {
+        content = f.content or "";
+      };
     };
 
 
@@ -109,11 +108,28 @@
   in rec {
 
 
-    # list of output files for pages
-    siteList = lib.forEach filesList (f: {
-      path = getPathConverted (builtins.substring 55 999 (builtins.toString f)); # output path of file
-      source = getInputPath { path = f; }; # input path in Nix store
-    });
+    # attrset, each value is string of output path
+    site = builtins.listToAttrs siteList;
+
+    # has a bazillion duplicates of all binary files
+    siteList = lib.flatten (lib.forEach filesList (f: 
+      lib.forEach langs (lang:
+        if lib.hasSuffix ".nix" f then
+          if builtins.hasAttr lang (import f { inherit templates; })
+          then {
+            name = builtins.substring 55 999 ((getDirName f) + "/" + lang + "/" + (getFileNameConverted f));
+            value = getInputPath { path = f; inherit lang; };
+          }
+          else if builtins.hasAttr "content" (import f { inherit templates; })
+            then {
+              name = builtins.substring 54 999 ((getDirName f) + "/" +  (getFileNameConverted f));
+              value = getInputPath { path = f; lang = "content"; };
+            }
+            else []
+        else {
+          name = getPathConverted (builtins.substring 55 999 (builtins.toString f));
+          value = getInputPath { path = f; lang = "content"; }; }
+      )));
 
     # list of input files
     filesList = lib.filesystem.listFilesRecursive ./src;
@@ -128,9 +144,9 @@
     # in ''<a href=${linkFinal}>text</a>'';
 
 
-    linkCommands = (lib.forEach siteList ({ path, source }:
-      ''mkdir -p $out/${getDirName path} && ln -s ${source} $out/${path}'')
-    );
+    linkCommands = (lib.mapAttrsToList (name: value:
+      ''mkdir -p $out/${getDirName name} && ln -s ${value} $out/${name}'')
+    ) site;
 
 
     packages.x86_64-linux.default = pkgs.stdenv.mkDerivation {
