@@ -29,11 +29,13 @@
       if path == ""
       then "/"
       else "/" + path;
+    
     getPathConverted = n: (builtins.replaceStrings
       [ ".css.nix" ".nix"  ]
       [ ".css"     ".html" ]
       n
     );
+
     getFileNameConverted = n: (getPathConverted
       (lib.last (builtins.split "/" (builtins.toString n)))
     );
@@ -41,7 +43,7 @@
 
     loadLang = { f, lang, writ ? "" }: if (builtins.hasAttr (lang+writ) langConvert)
       then {
-        name = builtins.substring 55 999 ((getDirName f) + "/" + lang + writ + "/" + (getFileNameConverted f));
+        name = ((getDirName (builtins.substring 55 999 (builtins.toString f))) + "/" + lang + writ + "/" + (getFileNameConverted f));
         value = loadNixFile { path = f; inherit lang writ; };
       }
       else [];
@@ -109,7 +111,6 @@
 
   in rec {
 
-
     # attrset, each name is string of output path, value of path in store
     site = builtins.listToAttrs siteList;
 
@@ -126,6 +127,7 @@
         name = getPathConverted (builtins.substring 55 999 (builtins.toString f));
         value = f; }
       ));
+
 
     # list of input files
     filesList = lib.filesystem.listFilesRecursive ./src;

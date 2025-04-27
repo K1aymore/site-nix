@@ -36,7 +36,7 @@ in
     <!-- ${mkNavLink { url = "/art"; en = "art"; sv = "konstverk"; tp-sp = "󱤪󱤻"; }} -->
   </div>
   <hr>
-  <div class="navbarSection">
+  <div id="navLangs" class="navbarSection">
     <ul>
       <li value="english"><a class="navLink" href="${dir}/en">english</a></li>
       <li value="english tendrilis"><a class="navLink tendrilis" href="${dir}/en-te/">en</a></li>

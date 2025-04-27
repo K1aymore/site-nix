@@ -13,7 +13,7 @@
 
     Welcome to my website!
 
-    This site has gone through a different iteration every time I've come back to it. This version is built using a little static site generator (written in Nix) I've been working on <a href="https://github.com/K1aymore/site-nix">here</a>. I have nothing of interest to put on this site but it's cool to have one.
+    This site has gone through a couple different iterations over the years. This version is built using a little static site generator (written in Nix) I've been working on <a href="https://github.com/K1aymore/site-nix">here</a>. I have nothing of interest to put on this site but it's cool to have one.
 
     I like
     <ul id="interestsList">
