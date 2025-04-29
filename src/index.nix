@@ -1,8 +1,6 @@
-{ templates, ... }:
+{ ... }:
 
 {
-
-  template = templates.page;
 
   title = "Home";
 
@@ -27,6 +25,8 @@
     <button onclick="sortList()">
       Shuffle List
     </button>
+
+    For keyboard access, use the up arrow and the down arrow to scroll up and down, and use tab and shift-tab to select links and buttons, then enter to interact with the selected item.
   '';
 
   sv =

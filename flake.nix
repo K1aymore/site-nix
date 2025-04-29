@@ -14,48 +14,63 @@
     lib = nixpkgs.lib;
 
     templates = {
-      page = ./templates/page.nix;
-      blog = ./templates/page.nix;
-      comic = ./templates/comic.nix;
+      page = import ./templates/page.nix;
+      blog = import ./templates/page.nix;
+      comic = import ./templates/comic.nix;
     };
 
 
-    langs = [ "en" "en" "sv" "sv" "tp" "tp" "tp" "tp" ];
+    langs = [ "en" "sv" "tp" ];
     writs = [ "" "-te" "-sp" "-jp" ];
 
-    getDirName = n: let 
-      path = builtins.concatStringsSep "/" (lib.dropEnd 1 (lib.flatten (builtins.split "/" (builtins.toString n))));
+    getDirName = n:  let
+      path = builtins.concatStringsSep "/" (lib.dropEnd 1 (lib.flatten (builtins.split "/" (getPathConverted n))));
     in 
       if path == ""
-      then "/"
+      then ""
       else "/" + path;
     
-    getPathConverted = n: (builtins.replaceStrings
-      [ ".css.nix" ".nix"  ]
-      [ ".css"     ".html" ]
-      n
+    getDirNoLangs = n: let
+      dir = getDirName n;
+      dirs = lib.flatten (lib.forEach langs (lang: lib.forEach writs (writ:
+        if lib.hasSuffix ("/" + lang + writ) dir
+        then lib.removeSuffix (lang + writ) dir
+        else []
+      )));
+    in 
+      if dirs == []
+      then dir
+      else builtins.head dirs;
+    
+    getPathConverted = n: let
+      path = if lib.hasPrefix "/nix/store/" (builtins.toString n)
+        then builtins.substring 55 999 (builtins.toString n)
+        else builtins.toString n;
+    in
+      (builtins.replaceStrings
+      [ ".nix"  ]
+      [ ".html" ]
+      path
     );
 
-    getFileNameConverted = n: (getPathConverted
-      (lib.last (builtins.split "/" (builtins.toString n)))
-    );
+    getFileNameConverted = n: builtins.baseNameOf (getPathConverted n);
 
 
-    loadLang = { f, lang, writ ? "" }: if (builtins.hasAttr (lang+writ) langConvert)
+    loadLang = { f, lang ? "", writ ? "" }: if (builtins.hasAttr (lang+writ) langConvert)
       then {
-        name = ((getDirName (builtins.substring 55 999 (builtins.toString f))) + "/" + lang + writ + "/" + (getFileNameConverted f));
+        name = builtins.replaceStrings ["//" "/en/"] ["/" "/"]
+          ((getDirName f) + "/" + lang + writ + "/" + (getFileNameConverted f));
         value = loadNixFile { path = f; inherit lang writ; };
       }
       else [];
     
 
     loadNixFile = { path, lang ? "en", writ ? "" }: let
-      pageData = import path { inherit templates; };
-      templateFunc = import pageData.template;
-      pageDataLangd = langConvert.${lang + writ} (pageData // {inherit path getDirName getFileNameConverted langConvert markdownConvert sitelen-pona-UCSUR lang writ;});
+      pageData = import path { };
+      pageDataLangd = langConvert.${lang + writ} (pageData // {inherit path getDirName getDirNoLangs getFileNameConverted langConvert urlTo markdownConvert sitelen-pona-UCSUR lang writ;});
     in
       (builtins.toFile (getFileNameConverted path)
-        (pageData.content or (templateFunc pageDataLangd)));
+        (pageData.content or (templates.${pageData.template or "page"} pageDataLangd)));
 
 
 
@@ -97,6 +112,12 @@
     };
 
 
+    urlTo = { url, lang ? "en", writ ? "", from ? "/" }: let
+      mainPart = (if (lib.hasPrefix "/" url) then url else url);
+      langPart = (if lang == "en" && writ == "" then "" else lang + writ);
+    in
+      lib.strings.normalizePath (mainPart + "/" + langPart);
+
     markdownConvert = { content, writ ? "" }: builtins.replaceStrings
       [ "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" "'"     "\n\n"        "\n    \n"    ]
       [ "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" "&#39;" "\n</p><p>\n" "\n</p><p>\n" ]
@@ -118,14 +139,12 @@
     siteList = lib.flatten (lib.forEach filesList (f: 
       if lib.hasSuffix ".nix" f
       then if builtins.hasAttr "content" (import f { inherit templates; })
-        then {
-          name = builtins.substring 55 999 ((getDirName f) + "/" +  (getFileNameConverted f));
-          value = loadNixFile { path = f; lang = "content"; };
-        }
+        then loadLang { inherit f; }
         else lib.forEach langs (lang: lib.forEach writs (writ: loadLang { inherit f lang writ; }))
       else {
-        name = getPathConverted (builtins.substring 55 999 (builtins.toString f));
-        value = f; }
+        name = getPathConverted f;
+        value = f;
+      }
       ));
 
 
@@ -157,7 +176,7 @@
       buildPhase = ''
         echo "building files..."
 
-        ${builtins.concatStringsSep "\n" linkCommands}
+        ${lib.concatLines linkCommands}
       '';
 
       installPhase = ''

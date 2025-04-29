@@ -1,10 +1,8 @@
-{ templates, ... }:
+{ ... }:
 
 {
 
-  template = templates.page;
-
-  title = "comics";
+  title = "Comics";
 
   date = "2025-02-07";
 
