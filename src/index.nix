@@ -14,7 +14,7 @@
     This site has gone through a couple different iterations over the years. This version is built using a little static site generator (written in Nix) I've been working on <a href="https://github.com/K1aymore/site-nix">here</a>. I have nothing of interest to put on this site but it's cool to have one.
 
     I like
-    <ul id="interestsList">
+    <ul\ id="interestsList">
       <li>NixOS</li>
       <li>Arcane and She-Ra</li>
       <li>logging everything</li>
@@ -22,7 +22,7 @@
       <li>NixOS</li>
       <li>Catppuccin</li>
     </ul>
-    <button onclick="sortList()">
+    <button\ onclick="sortList()">
       Shuffle List
     </button>
 
@@ -37,7 +37,7 @@
     Jag har gjort om den här webbplatsen några gånger. Den här version använder en static site generator jag jobbar på <a href="https://github.com/K1aymore/site-nix">här</a>, som jag skriver på Nix. Det finns ingenting som intresser här men det är kul att ha en webbplats.
 
     Jag tycker om
-    <ul id="interestsList">
+    <ul\ id="interestsList">
       <li>NixOS</li>
       <li>Arcane och She-Ra</li>
       <li>att skriva in allting</li>
@@ -45,7 +45,7 @@
       <li>NixOS</li>
       <li>Catppuccin</li>
     </ul>
-    <button onclick="sortList()">
+    <button\ onclick="sortList()">
       Blanda Listan
     </button>
   '';
@@ -61,7 +61,7 @@
     󱤪󱥁󱤧󱥓󱤂󱤉󱤌󱥣󱥨󱤧󱥔󱥩󱤴󱦜
 
     󱥁󱤧󱥔󱥩󱤴󱦝
-    <ul id="interestsList">
+    <ul\ id="interestsList">
       <li>󱤎󱤤󱦐NixOS󱦑</li>
       <li>󱤻󱦐Arcane󱦑󱤊󱤻󱦐She-Ra󱦑</li>
       <li>󱥠󱥍󱥡󱤴</li>
@@ -69,7 +69,7 @@
       <li>󱤎󱤤󱦐NixOS󱦑</li>
       <li>󱤞󱤟󱦐Catppuccin󱦑</li>
     </ul>
-    <button onclick="sortList()">
+    <button\ onclick="sortList()">
       󱥄󱤆󱤉󱤩󱥠
     </button>
   '';

@@ -2,7 +2,7 @@
 
 {
 
-  title = "Comics";
+  title = "Blog";
   
   date = "2025-02-07";
 

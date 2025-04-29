@@ -12,12 +12,14 @@ let
     then input.tp-sp
     else input.${lang} or input.en;
 
-  class = if writ == "-te"
-    then " tendrilis"
-    else "";
 
-  mkNavLink = { url ? "", ... }@langTitles:
-  ''<a class="navLink${class}" href="${urlTo { inherit url lang writ; }}">
+
+  mkNavLink = { url ? "", ... }@langTitles: let
+    class = if writ == "-te"
+      then "navLink tendrilis"
+      else "navLink";
+  in
+  ''<a class="${class}" href="${urlTo { inherit url lang writ; }}">
       ${markdownConvert { content = langPick langTitles; inherit writ; }}
     </a>'';
   

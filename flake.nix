@@ -105,7 +105,7 @@
       };
       tp-jp = f: f // {
         content = builtins.replaceStrings
-          [ ".\n"    ]
+          [ ".\n"   ]
           [ "</br>" ]
           (markdownConvert { content = (sitelen-pona-UCSUR.ucsur2hiragana f.tp); writ = f.writ; });
       };
@@ -119,13 +119,13 @@
       lib.strings.normalizePath (mainPart + "/" + langPart);
 
     markdownConvert = { content, writ ? "" }: builtins.replaceStrings
-      [ "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" "'"     "\n\n"        "\n    \n"    ]
-      [ "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" "&#39;" "\n</p><p>\n" "\n</p><p>\n" ]
+      [ "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" "'"   "\\ " "\n\n"        "\n    \n" ]
+      [ "<em>" "</em>" "<strong>" "</strong>" "<li>" "</li>" "&#39;" " " "\n</p><p>\n" "\n</p><p>\n" ]
       (if writ == "-te" then tendrilisConvert content else content);
 
     tendrilisConvert = content: builtins.replaceStrings
-      [ "    " "  " " [" "] " "[" "]" ", " ". "    " " ]
-      [ ""     ""   "("  ")"  "(" ")" "," ".</br>" "/" ]
+      [ "    "  "   "  "  "   " [" "] " "[" "]" ", " ". "    "\\ " " \n"  " " ]
+      [ ""      ""     ""     "("  ")"  "(" ")" ","  ".</br>"  " "  "\n"  "/" ]
       content;
 
 

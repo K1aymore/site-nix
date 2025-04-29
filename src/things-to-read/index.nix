@@ -1,7 +1,7 @@
 { ... }:
 
 let
-  mkLink = text: ''<a href="https://${text}">${text}</a>'';
+  mkLink = text: ''<a\ href="https://${text}">${text}</a>'';
 in
 {
 
@@ -17,11 +17,11 @@ in
       <li>${mkLink "xeiaso.net/blog"}</li>
       <li>${mkLink "www.supergoodcode.com"}</li>
       <li>${mkLink "solar.lowtechmagazine.com"}</li>
-      <li><a href="https://juuso.dev/blogPosts/nix-as-a-static-site-generator/nix-as-a-static-site-generator.html">juuso.dev</a></li>
+      <li><a\ href="https://juuso.dev/blogPosts/nix-as-a-static-site-generator/nix-as-a-static-site-generator.html">juuso.dev</a></li>
       <li>${mkLink "fzakaria.com"}</li>
-      <li><a href="https://isabelroses.com/blog/im-not-mad-im-disappointed">isabelroses.com</a></li>
+      <li><a\ href="https://isabelroses.com/blog/im-not-mad-im-disappointed">isabelroses.com</a></li>
       <li>${mkLink "blog.vladzahorodnii.com"}</li>
-      <li><a href="https://rosenzweig.io/blog/vk13-on-the-m1-in-1-month.html">rosenzweig.io</a></li>
+      <li><a\ href="https://rosenzweig.io/blog/vk13-on-the-m1-in-1-month.html">rosenzweig.io</a></li>
     </ul>
   '';
 
@@ -33,11 +33,11 @@ in
       <li>${mkLink "xeiaso.net/blog"}</li>
       <li>${mkLink "www.supergoodcode.com"}</li>
       <li>${mkLink "solar.lowtechmagazine.com"}</li>
-      <li><a href="https://juuso.dev/blogPosts/nix-as-a-static-site-generator/nix-as-a-static-site-generator.html">juuso.dev</a></li>
+      <li><a\ href="https://juuso.dev/blogPosts/nix-as-a-static-site-generator/nix-as-a-static-site-generator.html">juuso.dev</a></li>
       <li>${mkLink "fzakaria.com"}</li>
-      <li><a href="https://isabelroses.com/blog/im-not-mad-im-disappointed">isabelroses.com</a></li>
+      <li><a\ href="https://isabelroses.com/blog/im-not-mad-im-disappointed">isabelroses.com</a></li>
       <li>${mkLink "blog.vladzahorodnii.com"}</li>
-      <li><a href="https://rosenzweig.io/blog/vk13-on-the-m1-in-1-month.html">rosenzweig.io</a></li>
+      <li><a\ href="https://rosenzweig.io/blog/vk13-on-the-m1-in-1-month.html">rosenzweig.io</a></li>
     </ul>
   '';
   
@@ -49,11 +49,11 @@ in
       <li>${mkLink "xeiaso.net/blog"}</li>
       <li>${mkLink "www.supergoodcode.com"}</li>
       <li>${mkLink "solar.lowtechmagazine.com"}</li>
-      <li><a href="https://juuso.dev/blogPosts/nix-as-a-static-site-generator/nix-as-a-static-site-generator.html">juuso.dev</a></li>
+      <li><a\ href="https://juuso.dev/blogPosts/nix-as-a-static-site-generator/nix-as-a-static-site-generator.html">juuso.dev</a></li>
       <li>${mkLink "fzakaria.com"}</li>
-      <li><a href="https://isabelroses.com/blog/im-not-mad-im-disappointed">isabelroses.com</a></li>
+      <li><a\ href="https://isabelroses.com/blog/im-not-mad-im-disappointed">isabelroses.com</a></li>
       <li>${mkLink "blog.vladzahorodnii.com"}</li>
-      <li><a href="https://rosenzweig.io/blog/vk13-on-the-m1-in-1-month.html">rosenzweig.io</a></li>
+      <li><a\ href="https://rosenzweig.io/blog/vk13-on-the-m1-in-1-month.html">rosenzweig.io</a></li>
     </ul>
   '';
 

@@ -112,6 +112,7 @@ button {
   color: var(--text);
   background-color: var(--surface1);
   border: none;
+  font-size: var(--base-font-size);
   font-family: inherit;
   font-weight: bold;
 }
