@@ -16,7 +16,7 @@
     I like
     <ul\ id="interestsList">
       <li>NixOS</li>
-      <li>Arcane and She-Ra</li>
+      <li>Arcane</li>
       <li>logging everything</li>
       <li>languages apparently</li>
       <li>NixOS</li>
@@ -27,6 +27,8 @@
     </button>
 
     For keyboard access, use the up arrow and the down arrow to scroll up and down, and use tab and shift-tab to select links and buttons, then enter to interact with the selected item.
+
+    The navbar is set as a nav element, and the content area here is a main element. The navbar receives keyboard input before the content. There is visibility from the selection outline, feedback as it moves, constraints and mapping of only using tab and shift-tab to navigate the whole site, and consistency that shift-tab undoes the effects of tab.
   '';
 
   sv =
@@ -39,8 +41,8 @@
     Jag tycker om
     <ul\ id="interestsList">
       <li>NixOS</li>
-      <li>Arcane och She-Ra</li>
-      <li>att skriva in allting</li>
+      <li>Arcane</li>
+      <li>anteckna allting</li>
       <li>språk tydligen</li>
       <li>NixOS</li>
       <li>Catppuccin</li>
@@ -63,7 +65,7 @@
     󱥁󱤧󱥔󱥩󱤴󱦝
     <ul\ id="interestsList">
       <li>󱤎󱤤󱦐NixOS󱦑</li>
-      <li>󱤻󱦐Arcane󱦑󱤊󱤻󱦐She-Ra󱦑</li>
+      <li>󱤻󱦐Arcane󱦑</li>
       <li>󱥠󱥍󱥡󱤴</li>
       <li>󱥬󱤆</li>
       <li>󱤎󱤤󱦐NixOS󱦑</li>

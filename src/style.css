@@ -145,8 +145,6 @@ hr {
   width: fit-content;
   margin: auto;
   display: grid;
-  grid-template-columns: minmax(min-content, 50rem);
-  grid-auto-columns: min-content;
   grid-gap: 1rem;
   padding: 1rem;
 }
@@ -197,17 +195,32 @@ nav ul li {
 
 
 
-@media (width >= 80rem) {
-  #navbar {
-    padding-top: 1.5rem;
-  }
-  #navbar .navbarSection {
-    flex-direction: column;
-  }
-  #navLangs {
-    gap: 1rem;
-  }
-  #centerMargin {
+@media (width >= 80rem) and (height >= 55rem) {
+
+  #centerMargin:not(.linebreaker) {
     grid-template-columns: 17rem 50rem;
+
+    #navbar {
+      padding-top: 1.5rem;
+    }
+    #navbar .navbarSection {
+      flex-direction: column;
+    }
+    #navLangs {
+      gap: 1rem;
+    }
+  }
+  
+  #centerMargin.linebreaker {
+    /* center */
+  }
+
+  .linebreaker {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+  .content.linebreaker {
+    max-height: 50rem;
+    max-width: none;
   }
 }

@@ -1,9 +1,9 @@
 { content, lang ? "en", writ ? "", title, ... }@inputs:
 
 let 
-  contentClass = "content" +
-    (if (writ == "-sp" || writ == "-jp" || writ == "-te") then " linebreaker" else "") +
-    (if writ == "-te" then " tendrilis" else "");
+  linebreakerClass = if (writ == "-sp" || writ == "-jp" || writ == "-te")
+    then " linebreaker"
+    else "";
 in
 ''
 ${import ./parts/head.nix inputs}
@@ -11,16 +11,16 @@ ${import ./parts/head.nix inputs}
 </head>
 <body>
 
-<div id="centerMargin">
+<div id="centerMargin" class="${linebreakerClass}">
   ${import ./parts/navbar.nix inputs} 
-  <div class="${contentClass}">
+  <main class="content${linebreakerClass}${if writ == "-te" then " tendrilis" else ""}">
     <h1>
       ${title}
     </h1>
     <p>
       ${content}
     </p>
-  </div>
+  </main>
 </div>
 
 ${import ./parts/footer.nix inputs}
@@ -28,4 +28,4 @@ ${import ./parts/footer.nix inputs}
 
 </body>
 </html>
- ''
+''
