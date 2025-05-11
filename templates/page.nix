@@ -1,7 +1,7 @@
-{ content, lang ? "en", writ ? "", title, ... }@inputs:
+{ content, lang ? "en", writ ? "", title, vert, ... }@inputs:
 
 let 
-  linebreakerClass = if (writ == "-sp" || writ == "-jp" || writ == "-te")
+  linebreakerClass = if vert
     then " linebreaker"
     else "";
 in

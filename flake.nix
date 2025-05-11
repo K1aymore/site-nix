@@ -22,6 +22,7 @@
 
     langs = [ "en" "sv" "tp" ];
     writs = [ "" "-te" "-sp" "-jp" ];
+    writsVert = [ "-te" "-sp" "-jp" ];
 
     getDirName = n:  let
       path = builtins.concatStringsSep "/" (lib.dropEnd 1 (lib.flatten (builtins.split "/" (getPathConverted n))));
@@ -67,7 +68,7 @@
 
     loadNixFile = { path, lang ? "en", writ ? "" }: let
       pageData = import path { };
-      pageDataLangd = langConvert.${lang + writ} (pageData // {inherit path getDirName getDirNoLangs getFileNameConverted langConvert urlTo markdownConvert sitelen-pona-UCSUR lang writ;});
+      pageDataLangd = langConvert.${lang + writ} (pageData // {inherit path getDirName getDirNoLangs getFileNameConverted langConvert urlTo markdownConvert sitelen-pona-UCSUR lang writ; vert = builtins.elem writ writsVert; });
     in
       (builtins.toFile (getFileNameConverted path)
         (pageData.content or (templates.${pageData.template or "page"} pageDataLangd)));
