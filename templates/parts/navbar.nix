@@ -29,17 +29,13 @@ in
 <nav id="navbar">
   <div class="navbarSection">
     <a class="navLink" href="${urlTo { url = "/"; inherit lang writ; }}">klaymore.me</a>
-  </div>
-  <hr>
-  <div class="navbarSection">
-    ${mkNavLink { url = "/"; en = "home"; sv = "hem"; tp-sp = "󱥡󱥁"; }}
     <!-- ${mkNavLink { url = "/about/"; en = "about"; sv = "om"; tp-sp = "󱥡󱥁"; }} -->
     ${mkNavLink { url = "/blog/"; en = "blog"; sv = "blogg"; tp-sp = "󱥠󱥡"; }}
     ${mkNavLink { url = "/comics/"; en = "comics"; sv = "webbserier"; tp-sp = "󱥠󱤪"; }}
-    ${mkNavLink { url = "/things-to-read/"; en = "things to read"; sv = "saker att läsa"; tp-sp = "󱥄󱤮󱤉󱤪󱤆"; }}
+    ${mkNavLink { url = "/other-sites/"; en = "other sites"; sv = "ändra webbplatser"; tp-sp = "󱤪󱤆"; }}
     <!-- ${mkNavLink { url = "/art/"; en = "art"; sv = "konstverk"; tp-sp = "󱤪󱤻"; }} -->
   </div>
-    <div id="navLangs" class="navbarSection">
+  <div id="navLangs" class="navbarSection">
     <ul>
       <li value="english"><a class="navLink" href="${urlTo { lang = "en"; url = dir; }}">english</a></li>
       <li value="english tendrilis"><a class="navLink tendrilis" href="${urlTo { lang = "en"; writ = "-te"; url = dir; }}">en</a></li>

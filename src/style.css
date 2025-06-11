@@ -203,7 +203,7 @@ nav ul li {
 
 @media (width >= 80rem) and (height >= 60rem) {
 
-  #centerMargin:not(.linebreaker) {
+  #centerMargin {
     grid-template-columns: 17rem var(--content-width);
 
     #navbar {
@@ -213,10 +213,21 @@ nav ul li {
       flex-direction: column;
     }
     #navLangs {
-      gap: 1rem;
+      gap: 2rem;
     }
   }
   
+  /* #centerMargin.linebreaker {
+    #navbar .navbarSection {
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      border-top: none;
+
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+      border-right: 2px solid var(--overlay1);
+    }
+  }
 
   .linebreaker {
     writing-mode: vertical-rl;
@@ -225,5 +236,5 @@ nav ul li {
   .content.linebreaker {
     max-height: var(--content-width);
     max-width: none;
-  }
+  } */
 }
