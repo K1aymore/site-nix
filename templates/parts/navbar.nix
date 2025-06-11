@@ -39,8 +39,7 @@ in
     ${mkNavLink { url = "/things-to-read/"; en = "things to read"; sv = "saker att läsa"; tp-sp = "󱥄󱤮󱤉󱤪󱤆"; }}
     <!-- ${mkNavLink { url = "/art/"; en = "art"; sv = "konstverk"; tp-sp = "󱤪󱤻"; }} -->
   </div>
-  <hr>
-  <div id="navLangs" class="navbarSection">
+    <div id="navLangs" class="navbarSection">
     <ul>
       <li value="english"><a class="navLink" href="${urlTo { lang = "en"; url = dir; }}">english</a></li>
       <li value="english tendrilis"><a class="navLink tendrilis" href="${urlTo { lang = "en"; writ = "-te"; url = dir; }}">en</a></li>

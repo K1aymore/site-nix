@@ -18,7 +18,7 @@
       <li>NixOS</li>
       <li>Arcane</li>
       <li>logging everything</li>
-      <li>languages apparently</li>
+      <li>languages, apparently</li>
       <li>NixOS</li>
       <li>Catppuccin</li>
     </ul>
@@ -43,7 +43,7 @@
       <li>NixOS</li>
       <li>Arcane</li>
       <li>anteckna allting</li>
-      <li>språk tydligen</li>
+      <li>språk, tydligen</li>
       <li>NixOS</li>
       <li>Catppuccin</li>
     </ul>
